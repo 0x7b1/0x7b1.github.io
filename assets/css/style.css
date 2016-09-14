@@ -272,8 +272,9 @@ h6 {
 }
 
 p.small {
+  text-align: center;
 	color: #bbb;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 1.5;
 	display: block;
 }

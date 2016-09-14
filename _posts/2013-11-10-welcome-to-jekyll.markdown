@@ -9,31 +9,21 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 Now a little of Rust code <3
 
-{% highlight rust %}
-impl Handler<W> for MainState {
-    fn handle_notification(&mut self, ctx: RpcCtx<W>, method: &str, params: &Value) {
-        match Request::from_json(method, params) {
-            Ok(req) => {
-                let _ = self.handle_req(req, ctx.get_peer());
-                // TODO: should check None
-            }
-            Err(e) => print_err!("Error {} decoding RPC request {}", e, method)
-        }
-    }
+{% highlight rs %}
+fn main() {
+    let mut state = MainState::new();
+    let stdin = io::stdin();
+    let stdout = io::stdout();
+    let mut rpc_looper = RpcLoop::new(stdout);
 
-    fn handle_request(&mut self, ctx: RpcCtx<W>, method: &str, params: &Value) ->
-        Result<Value, Value> {
-        match Request::from_json(method, params) {
-            Ok(req) => {
-                let result = self.handle_req(req, ctx.get_peer());
-                result.ok_or_else(|| Value::String("return value missing".to_string()))
-            }
-            Err(e) => {
-                print_err!("Error {} decoding RPC request {}", e, method);
-                Err(Value::String("error decoding request".to_string()))
-            }
-        }
-    }
+    rpc_looper.mainloop(|| stdin.lock(), &mut state);
+}
+{% endhighlight %}
+
+Golang code
+{% highlight golang %}
+func main() {
+    fmt.Println("Hello World")
 }
 {% endhighlight %}
 

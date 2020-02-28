@@ -1,0 +1,784 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="shortcut icon" href="http://mkweb.bcgsc.ca/genomeinfo2010/gfx/favicon.ico" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="generator" content="manually!" />
+  <meta name="keywords" content="genome informatics 2010, cshl, hinxton, conference, program, cover, inforgraphics, genome, path" />
+  <meta name="author" content="Martin Krzywinski" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" integrity="sha256-V8SV2MO1FUb63Bwht5Wx9x6PVHNa02gv8BgH/uH3ung=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" integrity="sha256-dsOXGNHAo/syFnazt+KTBsCQeRmlcW1XKL0bCK4Baec=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js" integrity="sha256-F/Xda58SPdcUCr+xhSGz9MA2zQBPb0ASEYKohl8UCHc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/contrib/auto-render.min.js" integrity="sha256-90d2pnfw0r4K8CZAWPko4rpFXQsZvJhTBGYNkipDprI=" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=EB+Garamond|PT+Serif|Roboto+Mono|Vollkorn&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/cpp.min.js" integrity="sha256-ozgG+omJySLxpb4zh+eKHe0tNrz5t+a5j1sK8f3V8UY=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/sunburst.min.css" integrity="sha256-Gzd23jxV5GcW9yoFsMduPm18uqn9RGwxHgcg6zs2H1U=" crossorigin="anonymous" />
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/gl-matrix.js"></script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/shader-utils.js"></script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/trackball.js"> </script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/cubePoints.js"> </script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/cubeFaces8.js"> </script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/cubeFaces36.js"> </script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/grid.js"> </script>
+  <script type="text/javascript" src="http://imagine.inrialpes.fr/people/Francois.Faure/htmlCourses/WebGL/meshes/frame.js"> </script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/night-owl.min.css" integrity="sha256-K8fTxESt4HMQY0HnseJ1Wt1rDO8oJZkTUT22tdVg5Po=" crossorigin="anonymous" /> -->
+  <title>Cube rendering showcase</title>
+  <script>
+  $(document).ready(function() {
+    renderMathInElement(document.body);
+    hljs.initHighlightingOnLoad();
+
+    // Geometry of a Model
+    var points = [-1, -1, -1, 1, -1, -1, 1, -1, 1, -1, -1, 1,
+      -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1
+    ];
+    var trngls = [0, 1, 2, 2, 3, 0, 4, 5, 6, 6, 7, 4,
+      0, 1, 4, 1, 4, 5, 1, 2, 5, 2, 5, 6,
+      2, 3, 6, 3, 6, 7, 3, 0, 7, 0, 7, 4
+    ];
+
+    var cnv = document.getElementById("cnv"),
+      ctx = cnv.getContext("2d");
+    cnv.width = 300;
+    cnv.height = 300;
+    update();
+    ctx.strokeStyle = "#FF0000";
+
+
+    function update() {
+      var t = Date.now(),
+        ang = t / 500,
+        s = Math.sin(ang),
+        c = Math.cos(ang);
+      var mat = [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 4 + Math.sin(t / 320)];
+      ctx.clearRect(0, 0, 400, 300);
+      draw(points, trngls, mat);
+      window.requestAnimationFrame(update);
+    }
+
+    function draw(ps, ts, m) {
+      for (var i = 0; i < ts.length; i += 3) {
+        var p0 = ts[i] * 3,
+          p1 = ts[i + 1] * 3,
+          p2 = ts[i + 2] * 3;
+        var a = vertexShader(ps[p0], ps[p0 + 1], ps[p0 + 2], m);
+        var b = vertexShader(ps[p1], ps[p1 + 1], ps[p1 + 2], m);
+        var c = vertexShader(ps[p2], ps[p2 + 1], ps[p2 + 2], m);
+        fragmentShader(a, b, c);
+      }
+    }
+
+    function vertexShader(x, y, z, m) {
+      var x0 = m[0] * x + m[1] * y + m[2] * z + m[3];
+      var y0 = m[4] * x + m[5] * y + m[6] * z + m[7];
+      var z0 = m[8] * x + m[9] * y + m[10] * z + m[11];
+      return [x0, y0, z0];
+    }
+
+    // you can make a Z-buffer, sampling from texture, phong shading...
+    function fragmentShader(a, b, c) {
+      var x0 = 200 + 300 * a[0] / a[2],
+        y0 = 150 + 300 * a[1] / a[2];
+      var x1 = 200 + 300 * b[0] / b[2],
+        y1 = 150 + 300 * b[1] / b[2];
+      var x2 = 200 + 300 * c[0] / c[2],
+        y2 = 150 + 300 * c[1] / c[2];
+      // we should loop through all pixels of a 2D triangle ...
+      // but we just stroke its outline
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x0, y0);
+      ctx.stroke();
+    }
+  });
+  </script>
+  <script type="text/javascript">
+  $(document).ready(() => {
+    var object = [];
+    object.push(make_box())
+
+    var degRad = 1.0 / 180.0 * Math.PI;
+
+    var c = document.getElementById("thecanvas");
+    var ctx = c.getContext("2d");
+    var angle = 0;
+
+    projectObject = getProjectObject(c.width, c.height, 600, 10);
+
+    function rotateObject(obj, matrix) {
+      let len = obj.modelVertices.length;
+      for (let ptr = 0; ptr < len; ptr += 3)
+        matrix.rotateFromArray(obj.modelVertices, obj.rotatedVertices, ptr);
+    }
+
+    function scaleTranslateObject(obj, s, x, y, z) {
+      let len = obj.modelVertices.length;
+      for (let ptr = 0; ptr < len; ptr += 3) {
+        obj.translatedVertices[ptr] = obj.rotatedVertices[ptr] * s + x;
+        obj.translatedVertices[ptr + 1] = obj.rotatedVertices[ptr + 1] * s + y;
+        obj.translatedVertices[ptr + 2] = obj.rotatedVertices[ptr + 2] * s + z;
+      }
+    }
+
+    function getProjectObject(viewWidth, viewHeight, fov, viewDistance) {
+      let centerX = viewWidth / 2;
+      let centerY = viewHeight / 2;
+
+      function project(obj) {
+        let len = obj.modelVertices.length;
+        for (let ptr = 0; ptr < len; ptr += 3) {
+          let x = obj.translatedVertices[ptr];
+          let y = obj.translatedVertices[ptr + 1];
+          let z = obj.translatedVertices[ptr + 2];
+          let factor = fov / (viewDistance + z);
+          obj.projectedVertices[ptr] = x * factor + centerX;
+          obj.projectedVertices[ptr + 1] = y * factor + centerY;
+          obj.projectedVertices[ptr + 2] = z;
+        }
+      }
+      return project;
+    }
+
+    function averageFaceDepth(obj) {
+      let faceCount = obj.faces.length;
+      let depthPtr = -1;
+      for (let i = 0; i < faceCount; i += 3) {
+        let vert1 = obj.faces[i] * 3;
+        let vert2 = obj.faces[i + 1] * 3;
+        let vert3 = obj.faces[i + 2] * 3;
+        obj.faceDepths[++depthPtr] = (obj.rotatedVertices[vert1 + 2] + obj.rotatedVertices[vert2 + 2] + obj.rotatedVertices[vert3 + 2]) / 3;
+        obj.faceDepthsSortIndex[depthPtr] = depthPtr;
+      }
+      obj.faceDepthsSortIndex.sort(function(a, b) { return obj.faceDepths[b] - obj.faceDepths[a]; });
+    }
+
+    function getNormal(p) {
+      var nx = (p[1].y - p[0].y) * (p[2].z - p[0].z) - (p[1].z - p[0].z) * (p[2].y - p[0].y);
+      var ny = NaN; //(p[1].z - p[0].z)*(p[2].x - p[0].x) - (p[1].x - p[0].x)*(p[2].z - p[0].z); // Y normal not needed.
+      var nz = (p[1].x - p[0].x) * (p[2].y - p[0].y) - (p[1].y - p[0].y) * (p[2].x - p[0].x);
+      return { x: nx, y: ny, z: nz };
+    }
+
+    function getAngleLightScaler(points) {
+      let normalVector = getNormal(points);
+      let ang = Math.atan2(normalVector.z, normalVector.x); // -PI to PI
+      ang += Math.PI; // 0 to 2PI
+      ang /= Math.PI; // 0 to 2
+      let range = 2 - (ang * 2); // 4 to 0 (But only ever between 2 to 0 due to rotation position)
+      return Math.abs(range / 2);
+    }
+
+    function applyLighting(colour, scaler) {
+      var r = colour[0];
+      var g = colour[1];
+      var b = colour[2];
+      r *= scaler;
+      g *= scaler;
+      b *= scaler;
+      return [~~r, ~~g, ~~b];
+    }
+
+    function drawObject(obj, ctx) {
+      for (let i = 0; i < obj.faceDepthsSortIndex.length; i++) {
+        let faceIndex = obj.faceDepthsSortIndex[i];
+        let faceIndexOffset = faceIndex * 3;
+        let v1 = obj.faces[faceIndexOffset] * 3;
+        let v2 = obj.faces[faceIndexOffset + 1] * 3;
+        let v3 = obj.faces[faceIndexOffset + 2] * 3;
+
+        let lightScaler = getAngleLightScaler([{ x: obj.rotatedVertices[v1], y: obj.rotatedVertices[v1 + 1], z: obj.rotatedVertices[v1 + 2] },
+          { x: obj.rotatedVertices[v2], y: obj.rotatedVertices[v2 + 1], z: obj.rotatedVertices[v2 + 2] },
+          { x: obj.rotatedVertices[v3], y: obj.rotatedVertices[v3 + 1], z: obj.rotatedVertices[v3 + 2] }
+        ]);
+        let shadedCols = applyLighting([obj.colors[faceIndexOffset], obj.colors[faceIndexOffset + 1], obj.colors[faceIndexOffset + 2]], lightScaler);
+
+        let col = `rgb(${Math.round(obj.colors[faceIndexOffset] * lightScaler)},${Math.round(obj.colors[faceIndexOffset+1] * lightScaler)},${Math.round(obj.colors[faceIndexOffset+2] * lightScaler)})`;
+        //console.log(col);
+        ctx.fillStyle = col;
+        ctx.strokeStyle = col;
+        ctx.beginPath();
+        ctx.moveTo(obj.projectedVertices[v1], obj.projectedVertices[v1 + 1]);
+        ctx.lineTo(obj.projectedVertices[v2], obj.projectedVertices[v2 + 1]);
+        ctx.lineTo(obj.projectedVertices[v3], obj.projectedVertices[v3 + 1]);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+
+
+    function newFrame() {
+      ctx.fillStyle = "rgb(0, 0, 0)";
+      ctx.fillRect(0, 0, c.width, c.height);
+      rotator.makeMatrix(angle, angle / 1.2, angle / 1.4);
+      for (let objNum = 0; objNum < object.length; objNum++) {
+        let obj = object[objNum];
+        rotateObject(obj, rotator);
+        scaleTranslateObject(obj, 1, 0, 0, 0);
+        projectObject(obj);
+        averageFaceDepth(obj);
+        drawObject(obj, ctx);
+      }
+      angle += 2;
+      requestAnimationFrame(newFrame);
+    }
+
+
+    requestAnimationFrame(newFrame);
+
+    var rotator = (function() {
+      function matrixRotate() {
+        this.radmod = Math.PI / 180;
+        this.matrixRotate_cosa = null;
+        this.matrixRotate_sina = null;
+
+        this.matrixRotate_cosb = null;
+        this.matrixRotate_sinb = null;
+
+        this.matrixRotate_cosc = null;
+        this.matrixRotate_sinc = null;
+
+        this.matrixRotate_Axx = null;
+        this.matrixRotate_Axy = null;
+        this.matrixRotate_Axz = null;
+
+        this.matrixRotate_Ayx = null;
+        this.matrixRotate_Ayy = null;
+        this.matrixRotate_Ayz = null;
+
+        this.matrixRotate_Azx = null;
+        this.matrixRotate_Azy = null;
+        this.matrixRotate_Azz = null;
+      }
+
+      matrixRotate.prototype.makeMatrix = function(x, y, z) {
+        this.cosa = Math.cos(z * this.radmod);
+        this.sina = Math.sin(z * this.radmod);
+
+        this.cosb = Math.cos(y * this.radmod);
+        this.sinb = Math.sin(y * this.radmod);
+
+        this.cosc = Math.cos(x * this.radmod);
+        this.sinc = Math.sin(x * this.radmod);
+
+        this.Axx = this.cosa * this.cosb;
+        this.Axy = this.cosa * this.sinb * this.sinc - this.sina * this.cosc;
+        this.Axz = this.cosa * this.sinb * this.cosc + this.sina * this.sinc;
+
+        this.Ayx = this.sina * this.cosb;
+        this.Ayy = this.sina * this.sinb * this.sinc + this.cosa * this.cosc;
+        this.Ayz = this.sina * this.sinb * this.cosc - this.cosa * this.sinc;
+
+        this.Azx = -this.sinb;
+        this.Azy = this.cosb * this.sinc;
+        this.Azz = this.cosb * this.cosc;
+      }
+
+      matrixRotate.prototype.rotate = function(x, y, z) {
+        return {
+          x: this.Axx * x + this.Axy * y + this.Axz * z,
+          y: this.Ayx * x + this.Ayy * y + this.Ayz * z,
+          z: this.Azx * x + this.Azy * y + this.Azz * z
+        }
+      }
+
+      matrixRotate.prototype.rotateFromArray = function(from, to, offset) {
+        to[offset] = this.Axx * from[offset] + this.Axy * from[offset + 1] + this.Axz * from[offset + 2];
+        to[offset + 1] = this.Ayx * from[offset] + this.Ayy * from[offset + 1] + this.Ayz * from[offset + 2];
+        to[offset + 2] = this.Azx * from[offset] + this.Azy * from[offset + 1] + this.Azz * from[offset + 2];
+      }
+
+      return new matrixRotate();
+    }());
+
+
+
+    function make_box() {
+      var modelVertices = new Float32Array([
+        -1, 1, -1,
+        1, 1, -1,
+        1, -1, -1,
+        -1, -1, -1,
+        -1, 1, 1,
+        1, 1, 1,
+        1, -1, 1,
+        -1, -1, 1
+      ]);
+
+      var faces = new Uint32Array([
+        0, 1, 2,
+        2, 3, 0,
+        1, 5, 6,
+        6, 2, 1,
+        5, 4, 7,
+        7, 6, 5,
+        4, 0, 3,
+        3, 7, 4,
+        0, 4, 5,
+        5, 1, 0,
+        3, 2, 6,
+        6, 7, 3
+      ]);
+
+      var colors = new Uint8Array([
+        255, 0, 0,
+        255, 0, 0,
+        0, 255, 0,
+        0, 255, 0,
+        0, 0, 255,
+        0, 0, 255,
+        255, 255, 0,
+        255, 255, 0,
+        0, 255, 255,
+        0, 255, 255,
+        255, 0, 255,
+        255, 0, 255
+      ]);
+
+      //for(let p=0; p<modelVertices.length; p++) modelVertices[p] +=1;
+      var rotatedVertices = new Float32Array(modelVertices.length);
+      var translatedVertices = new Float32Array(modelVertices.length);
+      var projectedVertices = new Float32Array(modelVertices.length);
+      var faceDepths = new Float32Array(faces.length / 3);
+      var faceDepthsSortIndex = new Uint32Array(faceDepths.length);
+
+      return {
+        modelVertices,
+        rotatedVertices,
+        translatedVertices,
+        projectedVertices,
+        faces,
+        faceDepths,
+        faceDepthsSortIndex,
+        colors
+      };
+    }
+
+    init();
+  });
+  </script>
+  <script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+      attribute vec4 aVertexColor;
+
+      uniform mat4 uMVMatrix;
+      uniform mat4 uPMatrix;
+      uniform float pointSize;
+
+      /* COLOR */
+      varying vec4 vColor;
+
+      void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        gl_PointSize = pointSize;
+        /* COLOR */
+        vColor = aVertexColor;
+      }
+    </script>
+  <script id="shader-fs" type="x-shader/x-fragment">
+    #ifdef GL_ES
+      precision highp float;
+      #endif
+
+      /* COLOR */
+      varying vec4 vColor;
+      
+
+      void main(void) {
+        /* COLOR */
+        gl_FragColor = vColor;
+
+        
+        // TODO COLOR : commenter la ligne suivante pour passer en mode couleur
+        
+        //gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        
+      }
+    </script>
+  <script id="shader-fs-uniform-color" type="x-shader/x-fragment">
+    #ifdef GL_ES
+      precision highp float;
+      #endif
+
+      /* COLOR */
+      // varying vec4 vColor;
+      
+
+      void main(void) {
+        /* COLOR */
+        //gl_FragColor = vColor;
+
+        
+        // TODO COLOR : commenter la ligne suivante pour passer en mode couleur
+        
+        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        
+      }
+    </script>
+  <script>
+    var gl;
+
+  var shaderProgram;
+  var shaderProgram2;
+  var pointSizeUniformLocation; // Identifies the uniform that controls the size of points.
+
+  var cubeFaces8;
+  var grid;
+  var frame;
+
+  var nbX = 10;
+
+  function init() {
+    // Create canvas and setup GL
+    var canvas = document.getElementById("maillage-canvas");
+    try {
+      // 'experimental-webgl' est utilise depuis la phase de developpement de
+      // la specification de webGL il devrait etre remplace par 'webgl' un jour
+      gl = canvas.getContext("experimental-webgl");
+      gl.viewportWidth = canvas.width;
+      gl.viewportHeight = canvas.height;
+    } catch (e) { alert("Could not initialise WebGL, sorry :-("); }
+    gl.clearColor(0.0, 0.0, 0.0, 1.0); // Couleur : noire, opacite : 100
+    gl.enable(gl.DEPTH_TEST); // Enable depth testing
+
+    /* Mouse and keyboard interaction functions */
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
+    canvas.addEventListener('mousedown', mouseDown, true);
+    canvas.addEventListener('mousemove', mouseMove, true);
+    canvas.addEventListener('mouseup', mouseUp, true);
+    trackball = new TrackBall();
+
+    // Create the shaders used to display the objects.
+    shaderProgram = initShader("shader-vs", "shader-fs");
+    shaderProgram2 = initShader2("shader-vs", "shader-fs-uniform-color");
+
+    // Create the objects
+    cubePoints = new CubePoints();
+    grid = new Grid();
+    frame = new Frame();
+    cubeFaces8 = new CubeFaces8();
+
+    // display
+    render();
+  }
+
+
+  /*----------------------------------------------------------------------
+   * Render
+   *---------------------------------------------------------------------*/
+  function render() {
+    // adjust render area to the canvas
+    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+
+    // erase the image
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // set perspective projection
+    mat4.perspective(25, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+
+    // set viewing transformation
+    trackball.setMatrix(mvMatrix);
+
+
+    // setup shader
+    gl.useProgram(shaderProgram);
+    pointSizeUniformLocation = gl.getUniformLocation(shaderProgram, "pointSize");
+    gl.uniform1f(pointSizeUniformLocation, 15.0);
+    setMatrixUniforms(shaderProgram);
+
+    // draw objects using the current shader
+    //cubePoints.draw(shaderProgram);
+    cubeFaces8.draw(shaderProgram);
+    frame.draw(shaderProgram, 2.);
+
+
+
+    // setup shader
+    gl.useProgram(shaderProgram2);
+    pointSizeUniformLocation = gl.getUniformLocation(shaderProgram2, "pointSize");
+    gl.uniform1f(pointSizeUniformLocation, 15.0);
+    setMatrixUniforms(shaderProgram2);
+
+    // draw objects using the current shader
+    //grid.draw(shaderProgram);
+  }
+
+
+  /*----------------------------------------------------------------------
+   * Matrix utility functions
+   *---------------------------------------------------------------------*/
+  var mvMatrix = mat4.create();
+  var mvMatrixStack = [];
+  var pMatrix = mat4.create();
+
+  function mvPushMatrix() {
+    var copy = mat4.create();
+    mat4.set(mvMatrix, copy);
+    mvMatrixStack.push(copy);
+  }
+
+  function mvPopMatrix() {
+    if (mvMatrixStack.length == 0) {
+      throw "Invalid popMatrix!";
+    }
+    mvMatrix = mvMatrixStack.pop();
+  }
+
+  function setMatrixUniforms(shaderPgm) {
+    gl.uniformMatrix4fv(shaderPgm.pMatrixUniform, false, pMatrix);
+    gl.uniformMatrix4fv(shaderPgm.mvMatrixUniform, false, mvMatrix);
+  }
+
+  function degToRad(degrees) {
+    return degrees * Math.PI / 180;
+  }
+
+  /*----------------------------------------------------------------------
+   * Scene rendering loop and mouse handler stuff follows
+   *---------------------------------------------------------------------*/
+  var dragging = false;
+
+  function mouseDown(event) {
+    dragging = true;
+    trackball.startDragging(event.clientX, event.clientY);
+  }
+
+  function mouseUp() {
+    dragging = false;
+  }
+
+  /* On a mouse drag, we'll re-render the scene, passing in
+   * incremented angles in each time.  */
+  function mouseMove(event) {
+    if (dragging) {
+      trackball.drag(event.clientX, event.clientY);
+
+      render();
+    }
+  }
+
+  function handleKeyDown(event) {
+    if (String.fromCharCode(event.keyCode) == "R") {
+      trackball.setRotating();
+      //console.log("set rotating");
+    } else if (String.fromCharCode(event.keyCode) == "T") {
+      trackball.setTranslating();
+      //console.log("set translating");
+    } else if (String.fromCharCode(event.keyCode) == "Z") {
+      trackball.setZooming();
+      console.log("set zooming");
+    }
+  }
+
+  function handleKeyUp(event) {
+    //console.log(String.fromCharCode(event.keyCode));
+  }
+
+  var trackball;
+  </script>
+  <style type="text/css">
+  .tri-int-div {
+    width: 300px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="frame">
+    <div id="masthead">
+      <div style="margin-top: -20px; float: right">
+        <a href="https://0x7b1.github.io/home/">Home</a>
+        <span class="sep">·</span>
+        <a href="https://0x7b1.github.io/about/">About</a>
+      </div>
+      <div id="conftitle">Cube rendering showcase</div>
+      Aug 22, 2018
+      <span class="version">
+        #cg
+        <span class="sep">·</span>
+        #math
+      </span>
+    </div>
+    <div id="cover" style="font-size: 13px">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <canvas class="tri-int-div" id="cnv"></canvas>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <canvas class="tri-int-div" id="thecanvas" width="300" height="300"></canvas>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <canvas class="tri-int-div" id="maillage-canvas" width="300" height="300"></canvas>
+      <br>
+      <br>
+      <br>
+    </div>
+    <div id="copy">
+      <p>When it comes to talking about cubes we get serious because this is one of the first concepts that one have to learn in order to understand the graphics pipeline. Now a showcase of cubes implemented with different approaches will be presented.</p>
+      <br>
+      <h1>Canvas</h1>
+      <pre>
+        <code class="js" style="font-size: 13px">
+function vertexShader(x,y,z, m) {
+  const x0 = m[0]*x+m[1]*y+m[ 2]*z+m[ 3];
+  const y0 = m[4]*x+m[5]*y+m[ 6]*z+m[ 7];
+  const z0 = m[8]*x+m[9]*y+m[10]*z+m[11];
+  return [x0,y0,z0];
+}
+
+// you can make a Z-buffer, sampling from texture, phong shading...
+function fragmentShader(a,b,c) {
+  const x0=200+300*a[0]/a[2], y0=150+300*a[1]/a[2];  
+  const x1=200+300*b[0]/b[2], y1=150+300*b[1]/b[2]; 
+  const x2=200+300*c[0]/c[2], y2=150+300*c[1]/c[2];
+  // we should loop through all pixels of a 2D triangle ...
+  // but we just stroke its outline
+  ctx.beginPath();
+  ctx.moveTo(x0,y0);
+  ctx.lineTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.lineTo(x0,y0);
+  ctx.stroke();
+}
+        </code>
+      </pre>
+      <h1>WebGL</h1>
+      <pre>
+        <code class="js" style="font-size: 13px">
+function drawObject(obj, ctx) {
+  for (let i = 0; i < obj.faceDepthsSortIndex.length; i++) {
+    let faceIndex = obj.faceDepthsSortIndex[i];
+    let faceIndexOffset = faceIndex * 3;
+    let v1 = obj.faces[faceIndexOffset] * 3;
+    let v2 = obj.faces[faceIndexOffset + 1] * 3;
+    let v3 = obj.faces[faceIndexOffset + 2] * 3;
+
+    let lightScaler = getAngleLightScaler([{ 
+      x: obj.rotatedVertices[v1],
+      y: obj.rotatedVertices[v1 + 1],
+      z: obj.rotatedVertices[v1 + 2],
+    },{ 
+      x: obj.rotatedVertices[v2], 
+      y: obj.rotatedVertices[v2 + 1],
+      z: obj.rotatedVertices[v2 + 2],
+    },{ 
+      x: obj.rotatedVertices[v3],
+      y: obj.rotatedVertices[v3 + 1],
+      z: obj.rotatedVertices[v3 + 2],
+    }]);
+
+    let shadedCols = applyLighting([
+      obj.colors[faceIndexOffset], 
+      obj.colors[faceIndexOffset + 1],
+      obj.colors[faceIndexOffset + 2]
+    ], lightScaler);
+
+    let col = `rgb(${
+      Math.round(obj.colors[faceIndexOffset] * lightScaler)},${
+      Math.round(obj.colors[faceIndexOffset+1] * lightScaler)},${
+      Math.round(obj.colors[faceIndexOffset+2] * lightScaler)})`;
+
+    ctx.fillStyle = col;
+    ctx.strokeStyle = col;
+    ctx.beginPath();
+    ctx.moveTo(obj.projectedVertices[v1], 
+      obj.projectedVertices[v1 + 1]);
+    ctx.lineTo(obj.projectedVertices[v2], 
+      obj.projectedVertices[v2 + 1]);
+    ctx.lineTo(obj.projectedVertices[v3], 
+      obj.projectedVertices[v3 + 1]);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+}
+        </code>
+      </pre>
+      <br>
+      <h1>GLSL</h1>
+      <pre>
+        <code class="c" style="font-size: 13px">
+#version 330 core
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aNormal;
+
+out vec3 Normal;
+out vec3 Position;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+void main()
+{
+    Normal = mat3(transpose(inverse(model))) * aNormal;
+    Position = vec3(model * vec4(aPos, 1.0));
+    gl_Position = projection * view * vec4(Position, 1.0);
+}  
+        </code>
+      </pre>
+    </div>
+    <footer class="footer">
+      <div class="container container--large">
+        © 2020 Juan Carlos Ramos
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>

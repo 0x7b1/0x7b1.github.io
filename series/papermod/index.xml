@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PaperMod</title>
-    <link>https://adityatelange.github.io/series/papermod/</link>
+    <link>https://0x7b1.github.io/series/papermod/</link>
     <description>Recent content on PaperMod</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 15 Sep 2020 11:30:03 +0530</lastBuildDate><atom:link href="https://adityatelange.github.io/series/papermod/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Sep 2020 11:30:03 +0530</lastBuildDate><atom:link href="https://0x7b1.github.io/series/papermod/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Papermod - Installation</title>
-      <link>https://adityatelange.github.io/posts/papermod/papermod-installation/</link>
+      <link>https://0x7b1.github.io/posts/papermod/papermod-installation/</link>
       <pubDate>Tue, 15 Sep 2020 11:30:03 +0530</pubDate>
       
-      <guid>https://adityatelange.github.io/posts/papermod/papermod-installation/</guid>
+      <guid>https://0x7b1.github.io/posts/papermod/papermod-installation/</guid>
       <description>Read Install and Update instructions here</description>
     </item>
     

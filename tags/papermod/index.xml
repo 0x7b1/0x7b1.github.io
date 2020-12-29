@@ -2,34 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PaperMod</title>
-    <link>https://adityatelange.github.io/tags/papermod/</link>
+    <link>https://0x7b1.github.io/tags/papermod/</link>
     <description>Recent content on PaperMod</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 17 Sep 2020 11:30:03 +0530</lastBuildDate><atom:link href="https://adityatelange.github.io/tags/papermod/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Sep 2020 11:30:03 +0530</lastBuildDate><atom:link href="https://0x7b1.github.io/tags/papermod/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Papermod - Installation</title>
-      <link>https://adityatelange.github.io/posts/papermod/papermod-installation/</link>
+      <link>https://0x7b1.github.io/posts/papermod/papermod-installation/</link>
       <pubDate>Tue, 15 Sep 2020 11:30:03 +0530</pubDate>
       
-      <guid>https://adityatelange.github.io/posts/papermod/papermod-installation/</guid>
+      <guid>https://0x7b1.github.io/posts/papermod/papermod-installation/</guid>
       <description>Read Install and Update instructions here</description>
     </item>
     
     <item>
       <title>Papermod - Features</title>
-      <link>https://adityatelange.github.io/posts/papermod/papermod-features/</link>
+      <link>https://0x7b1.github.io/posts/papermod/papermod-features/</link>
       <pubDate>Wed, 16 Sep 2020 11:30:03 +0530</pubDate>
       
-      <guid>https://adityatelange.github.io/posts/papermod/papermod-features/</guid>
+      <guid>https://0x7b1.github.io/posts/papermod/papermod-features/</guid>
       <description>Get known about All Features in PaperMod</description>
     </item>
     
     <item>
       <title>Papermod - Icons</title>
-      <link>https://adityatelange.github.io/posts/papermod/papermod-icons/</link>
+      <link>https://0x7b1.github.io/posts/papermod/papermod-icons/</link>
       <pubDate>Thu, 17 Sep 2020 11:30:03 +0530</pubDate>
       
-      <guid>https://adityatelange.github.io/posts/papermod/papermod-icons/</guid>
+      <guid>https://0x7b1.github.io/posts/papermod/papermod-icons/</guid>
       <description>List of all Icons supported by PaperMod</description>
     </item>
     

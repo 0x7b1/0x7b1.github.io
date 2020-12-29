@@ -6,7 +6,7 @@ series: ["PaperMod"]
 weight: 1
 aliases: ["/papermod-installation"]
 tags: ["PaperMod"]
-author: "Aditya Telange"
+author: "JC RAMOS"
 showToc: true
 TocOpen: true
 ---
@@ -15,6 +15,8 @@ TocOpen: true
 
 Follow [this](https://gohugo.io/getting-started/quick-start/) guide to setup hugo and create a new site.
 Make sure you install latest version of `hugo`(>=0.74.0).
+
+This line is new in this place.
 
 After you have created a new site, at [Step 3](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme) follow the steps:
 

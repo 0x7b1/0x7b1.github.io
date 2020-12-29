@@ -1,5 +1,5 @@
 baseURL: "https://0x7b1.github.io/"
-title: PaperMod
+title: blog jc
 paginate: 8
 theme: hugo-PaperMod
 enableInlineShortcodes: true

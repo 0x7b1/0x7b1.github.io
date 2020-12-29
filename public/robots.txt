@@ -1,3 +1,0 @@
-User-agent: *
-Disallow:
-Sitemap: https://adityatelange.github.io/sitemap.xml

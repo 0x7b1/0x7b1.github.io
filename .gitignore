@@ -1,3 +1,4 @@
 _site/
 .sass-cache/
-.DS_Storepublic
+public/
+.DS_Store

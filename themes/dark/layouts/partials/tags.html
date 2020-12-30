@@ -1,0 +1,9 @@
+{{- if or .Params.author .Site.Params.tags }}
+  {{- $tags := (.Params.tags | default .Site.Params.tags)}}
+  {{- $tags_type := (printf "%T" $tags) }}
+  {{- if (or (eq $tags_type "[]string") (eq $tags_type "[]interface {}") ) }}
+    {{- (delimit $tags ", " ) }}
+  {{- else }}
+    {{- $tags }}
+  {{- end }}
+{{- end -}}

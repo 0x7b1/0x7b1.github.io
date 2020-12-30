@@ -3,15 +3,20 @@
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
     max-width: calc(var(--main-width) + var(--gap) * 2);
     margin: auto;
-    padding: var(--gap)
+    padding: var(--gap);
+    padding: 0 var(--gap);
 }
 
 .page-header {
-    margin-bottom: 24px
+    margin-bottom: 24px;
+    border: 2px solid var(--primary);
+    border-style: solid none;
+    padding: var(--gap) 0px;
 }
 
 .page-header h1 {
-    font-size: 40px
+    font-size: 30px;
+    text-transform: uppercase;
 }
 
 .pagination {

@@ -1,14 +1,8 @@
 {{- define "main" }}
 
 {{- if (and .Site.Params.profileMode.enabled .IsHome) }}
-{{- partial "index_profile.html" . }}
+  {{- partial "index_profile.html" . }}
 {{- else }} {{/* if not profileMode */}}
-
-{{- if not .IsHome | and .Title }}
-<header class="page-header">
-  <h1>{{ .Title }}</h1>
-</header>
-{{- end }}
 
 {{- $pages := union .RegularPages .Sections }}
 {{- if .IsHome }}
@@ -20,26 +14,34 @@
 {{- range $index, $page := $paginator.Pages }}
   {{- $class := "post-entry" }}
   {{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0)) }}
-
 {{- else if $term }}
   {{- $class = "post-entry tag-entry" }}
 {{- end }}
 <article class="{{ $class }}">
-  {{- partial "cover.html" (dict "cxt" . "IsHome" true) }}
-  <header class="entry-header">
-    <h2>
-      {{ .Title }}
-      {{- if .Draft }}<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>{{- end }}
-    </h2>
-  </header>
-  {{- if (ne .Site.Params.hideSummary true)}}
-  <section class="entry-content">
-    <p>{{ .Summary | plainify | htmlUnescape }}...</p>
-  </section>
-  {{- end }}
-  <footer class="entry-footer">
-    {{- partial "post_meta.html" . -}}
-  </footer>
+  {{- $imageUrl := .Params.cover.image }}
+  {{- $classCard := "card-text-no-cover"}}
+  {{- if $imageUrl  }}
+    {{- $classCard = "card-text-cover"}}
+  {{- end}}
+  <div class="{{ $classCard }}">
+    {{- if $imageUrl }}
+      <figure class="portada" style="background-image: url({{ $imageUrl }});"></figure>
+    {{- end -}}
+      <div class="title-total">
+        <header class="entry-header">
+          <h3>
+            {{ .Title }}
+            {{- if .Draft }}<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>{{- end }}
+          </h3>
+        </header>
+        <section class="entry-content">
+          <p>{{ .Summary | plainify | htmlUnescape }}...</p>
+        </section>
+        <footer class="entry-footer">
+          {{- partial "post_meta.html" . -}}
+        </footer>
+      </div>
+  </div>
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
 {{- end }}

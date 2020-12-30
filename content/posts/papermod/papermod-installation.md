@@ -1,22 +1,23 @@
 ---
-title: "Papermod - Installation"
-summary: Read Install and Update instructions here
+title: "OSBox"
+summary: OSBox is the solution for managing the software stack in any operating system. It automatically synchronizes, manages dependencies and configuration files
 date: 2020-09-15T11:30:03+05:30
 draft: false
 series: ["PaperMod"]
 weight: 1
 aliases: ["/papermod-installation"]
-tags: ["PaperMod"]
-author: "JC RAMOS"
+# tags: ["PaperMod", "TOCSUERO"]
+series: ["projects"]
+author: ["Project", "tom"]
 showToc: false
 TocOpen: true
 hidemeta: false
 disableShare: true
-# cover:
-#     image: "http://unsplash.it/1200"
-#     alt: "<alt text>"
-#     caption: "<text>"
-#     relative: false
+cover:
+    image: "https://www.michaelfogleman.com/static/img/project/dlaf/thumbnail/1.png?bust=1550177967"
+    alt: "<alt text>"
+    caption: "<text>"
+    relative: false
 comments: false
 ---
 

@@ -4,7 +4,8 @@ title: "Markdown Syntax Guide"
 date: "2019-03-11"
 description: "Sample article showcasing basic Markdown syntax and formatting for HTML elements."
 tags: ["markdown", "css", "html", "themes"]
-categories: ["themes", "syntax"]
+categories: ["projects"]
+# disableShare: true
 series: ["Themes Guide"]
 aliases: ["migrate-from-jekyl"]
 ShowToc: false

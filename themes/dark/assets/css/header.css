@@ -6,7 +6,7 @@
     /* max-width: calc(var(--nav-width) + var(--gap) * 2); */
     margin-inline-start: auto;
     margin-inline-end: auto;
-    line-height: var(--header-height)
+    line-height: var(--header-height);
 }
 
 .nav a {
@@ -39,9 +39,10 @@
 }
 
 .theme-toggle svg {
-    height: 18px;
+    height: 16px;
     user-select: none;
-    cursor: pointer
+    vertical-align: text-bottom;
+    cursor: pointer;
 }
 
 body.dark #moon {
@@ -67,6 +68,7 @@ body:not(.dark) #sun {
 .menu a {
     font-size: 14px;
     font-family: AtlasGrotesk-Bold;
+    /* text-transform: uppercase; */
 }
 
 .menu .active {

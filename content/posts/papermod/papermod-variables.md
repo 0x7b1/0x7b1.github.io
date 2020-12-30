@@ -1,12 +1,17 @@
 ---
 title: "Papermod - Variables"
-summary: List of Front Matter variables used by PaperMod
+summary: A project that led the discovery of many species
 date: 2020-09-24T11:33:33+05:30
 showToc: true
 TocOpen: true
 tags: ["PaperMod"]
 author: "Aditya Telange"
 draft: true
+cover:
+  image: "https://www.michaelfogleman.com/static/img/project/rush/1.gif?bust=1531542023"
+  alt: "<alt text>"
+  caption: "<text>"
+  relative: false
 ---
 
 **Below are variables used with this theme...**

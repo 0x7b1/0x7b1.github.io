@@ -1,5 +1,5 @@
 baseURL: "https://0x7b1.github.io/"
-title: blog jc
+title: Carlos Ramos
 paginate: 8
 theme: dark
 enableInlineShortcodes: true
@@ -16,18 +16,21 @@ languages:
     weight: 1
     menu:
       main:
+        - name: Home
+          url: /
+          weight: 1
         - name: Blog
-          url: archives
+          url: series/blog
           weight: 5
         - name: Projects
-          url: projects
+          url: series/projects
           weight: 10
-        - name: Categories
-          url: categories
-          weight: 10
-        - name: Search
-          url: search
-          weight: 10
+        # - name: Categories
+        #   url: categories
+        #   weight: 10
+        # - name: Search
+        #   url: search
+        #   weight: 10
         - name: About
           url: about
           weight: 20
@@ -94,6 +97,7 @@ outputs:
     - JSON
 
 params:
+  showShareButtons: false
   env: development
   description: "jc - https://github.com/adityatelange/hugo-PaperMod"
   author: jc
@@ -102,6 +106,7 @@ params:
   mainSections: ["projects", "posts"]
   defaultTheme: auto
   ShowShareButtons: true
+  # disableThemeToggle: true
   displayFullLangName: true
   # images: ""
   # assets:
@@ -137,8 +142,14 @@ params:
     - name: file
       url: "https://github.com/adityatelange/hugo-PaperMod"
 
+markup:
+  highlight:
+    codeFences: true
+    style: swapoff
+    # lineNos: true
+
 taxonomies:
-  category: categories
+  # category: categories
   tag: tags
   series: series
 

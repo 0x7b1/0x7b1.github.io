@@ -4,10 +4,10 @@
     {{- else }}
     <span>&copy; {{ now.Year }} <a href="{{ "" | absLangURL }}">{{ .Site.Title }}</a></span>
     {{- end }}
+    <!-- <span>&middot;</span> -->
+    <!-- <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span> -->
     <span>&middot;</span>
-    <span>Powered by <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a></span>
-    <span>&middot;</span>
-    <span>Theme <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a></span>
+    <span><a href="https://github.com/0x7b1" rel="noopener" target="_blank">Licenses</a></span>
 </footer>
 <a href="#top">
     <button class="top-link" id="top-link" type="button" aria-label="go to top" title="Go to Top (Alt + G)"
@@ -20,13 +20,8 @@
 {{- partial "extend_footer.html" . -}}
 {{ if (and (in site.Params.mainSections .Type) (ne .Layout `archives`) (ne .Layout `search`)) }}
 {{- if not .Site.Params.assets.disableFingerprinting }}
-{{- $highlight := slice (resources.Get "js/highlight.min.js") | resources.Concat "assets/js/highlight.js" | minify | fingerprint }}
-<script defer src="{{ $highlight.Permalink }}" integrity="{{ $highlight.Data.Integrity }}"
-    onload="hljs.initHighlightingOnLoad();"></script>
-{{- else}}
-{{- $highlight := slice (resources.Get "js/highlight.min.js") | resources.Concat "assets/js/highlight.js" | minify }}
-<script defer src="{{ $highlight.Permalink }}" onload="hljs.initHighlightingOnLoad();"></script>
 {{- end}}
+
 {{- end }}
 <script>
     window.onload = function () {

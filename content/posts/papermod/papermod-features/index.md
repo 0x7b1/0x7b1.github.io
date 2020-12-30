@@ -1,6 +1,6 @@
 ---
-title: "Papermod - Features"
-summary: Get known about All Features in PaperMod
+title: "Heightmap Meshing"
+summary: Convert any grayscale heightmap into a 3D triangle mesh.
 date: 2020-09-16T11:30:03+05:30
 showToc: true
 weight: 2
@@ -8,6 +8,8 @@ aliases: ["/papermod-features"]
 tags: ["PaperMod"]
 author: "Aditya Telange"
 tocopen: true
+cover:
+  image: https://www.michaelfogleman.com/static/img/project/hmm/thumbnail/1.png?bust=1567206833
 ---
 
 ### Assets (js/css)

@@ -1,7 +1,1 @@
-# hugo-paperMod Example
-
-This repository offers an example site for [hugo-PaperMod](https://github.com/adityatelange/hugo-PaperMod)
-
-## Install
-
-Read Wiki => [hugo-PaperMod - Installation](https://github.com/adityatelange/hugo-PaperMod/wiki/Installation)
+Hello! This is the source code of my personal website.

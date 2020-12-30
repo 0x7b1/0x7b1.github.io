@@ -2,13 +2,22 @@
 title: "Papermod - Installation"
 summary: Read Install and Update instructions here
 date: 2020-09-15T11:30:03+05:30
+draft: false
 series: ["PaperMod"]
 weight: 1
 aliases: ["/papermod-installation"]
 tags: ["PaperMod"]
 author: "JC RAMOS"
-showToc: true
+showToc: false
 TocOpen: true
+hidemeta: false
+disableShare: true
+# cover:
+#     image: "http://unsplash.it/1200"
+#     alt: "<alt text>"
+#     caption: "<text>"
+#     relative: false
+comments: false
 ---
 
 ## Guide
@@ -62,7 +71,7 @@ Example Site Structure is present here: [exampleSite](https://github.com/adityat
 baseURL: "https://examplesite.com"
 title: ExampleSite
 paginate: 5
-theme: hugo-PaperMod
+theme: dark
 
 enableRobotsTXT: true
 buildDrafts: false
@@ -161,9 +170,9 @@ aliases: ["/first"]
 tags: ["first"]
 author: "Me"
 # author: ["Me", "You"] # multiple authors
-showToc: true
+showToc: false
 TocOpen: false
-draft: false
+draft: true
 hidemeta: false
 disableShare: false
 cover:

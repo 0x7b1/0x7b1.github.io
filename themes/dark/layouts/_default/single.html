@@ -28,7 +28,7 @@
     </div>
     {{- end}}
   </header>
-  {{- partial "cover.html" (dict "cxt" . "IsHome" false) }}
+  <!-- {{- partial "cover.html" (dict "cxt" . "IsHome" false) }} -->
   {{- if .Params.ShowToc }}
   <div class="toc">
     <details {{if .Params.TocOpen }} open{{ end }}>
@@ -52,9 +52,9 @@
       {{- end }}
     </ul>
     {{- end }}
-    {{- if (and .Site.Params.ShowShareButtons (ne .Params.disableShare true) ) }}
+    <!-- {{- if (and .Site.Params.ShowShareButtons (ne .Params.disableShare true) ) }}
       {{- partial "share_icons.html" . }}
-    {{- end }}
+    {{- end }} -->
   </footer>
 
   {{- if and ($.Site.Params.comments) (ne .Params.comments false) }}

@@ -50,7 +50,8 @@
 
 .card-text-cover {
     display: grid;
-    grid-template-columns: 2fr 9fr;
+    /* grid-template-columns: 2fr 9fr; */
+    grid-template-columns: 2fr 5fr;
 }
 
 .card-text-no-cover {

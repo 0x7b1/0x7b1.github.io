@@ -97,7 +97,6 @@ outputs:
     - JSON
 
 params:
-  showShareButtons: false
   env: development
   description: "jc - https://github.com/adityatelange/hugo-PaperMod"
   author: jc
@@ -105,7 +104,7 @@ params:
   ShowReadingTime: true
   mainSections: ["projects", "posts"]
   defaultTheme: auto
-  ShowShareButtons: true
+  ShowShareButtons: false
   # disableThemeToggle: true
   displayFullLangName: true
   # images: ""
@@ -116,13 +115,13 @@ params:
     enabled: false
     title: Carlos Ramos
     subtitle: >
-      Welcome to demo of hugo's jc.
+      I am a MSc. student in the Data Systems group at the University of Tartu. I received a BSc in Computer Science, and have previously worked on networked and distributed systems.
+      I am  interested in distributed and data systems, visualization, sound synthesis, and education. I want to help people by providing better tools for learning and building.
 
-      - **PaperMod** is a simple but fast and responsive theme with useful feature-set that enhances UX.
-    imageUrl: "https://f4.bcbits.com/img/0016228918_41.jpg"
-    imageTitle: my image
-    imageWidth: 250
-    imageHeight: 250
+    imageUrl: "/profile.jpg"
+    imageTitle: profile
+    imageWidth: 128
+    imageHeight: 128
     # buttons:
     #   - name: Resumé
     #     url: archives
@@ -135,12 +134,12 @@ params:
   #     - **PaperMod** is a simple but fast and responsive theme with useful feature-set that enhances UX.
 
   socialIcons:
-    - name: twitter
-      url: "#"
     - name: github
-      url: "https://github.com/adityatelange/hugo-PaperMod"
-    - name: file
-      url: "https://github.com/adityatelange/hugo-PaperMod"
+      url: "https://github.com/0x7b1"
+    - name: twitter
+      url: "http://twitter.com/_0x7b1"
+    - name: resume
+      url: "/resume.pdf"
 
 markup:
   highlight:

@@ -11,7 +11,7 @@
 <meta name="description" content="About - Carlos Ramos">
 <meta name="author" content="jc">
 <link rel="canonical" href="https://0x7b1.github.io/about/" />
-<link href="https://0x7b1.github.io/assets/css/stylesheet.min.5f2d27a2fd13c93fdaec3e7015f2e5424d3618e048b6af6a02db1b678288241e.css" integrity="sha256-Xy0nov0TyT/a7D5wFfLlQk02GOBItq9qAtsbZ4KIJB4=" rel="preload stylesheet"
+<link href="https://0x7b1.github.io/assets/css/stylesheet.min.3d0049017c1b1a8ca8bdbbe74424468742edd3c061a9ee70a811c2d8a706285c.css" integrity="sha256-PQBJAXwbGoyovbvnRCRGh0Lt08Bhqe5wqBHC2KcGKFw=" rel="preload stylesheet"
     as="style">
 
 <link rel="icon" href="https://0x7b1.github.io/favicon.ico">
@@ -24,6 +24,10 @@
 <meta name="generator" content="Hugo 0.79.1" />
 
 
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
 <meta property="og:title" content="About" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="article" />
@@ -139,7 +143,7 @@
     <div class="profile_inner"><img src="/profile.jpg" alt="profile"
             height="128" width="128" />
         <h1>Carlos Ramos</h1>
-        <span>I am a MSc. student in the Data Systems group at the University of Tartu. I received a BSc in Computer Science, and have previously worked on networked and distributed systems. I am  interested in distributed and data systems, visualization, sound synthesis, and education. I want to help people by providing better tools for learning and building.</span><div class="social-icons"><a href="https://github.com/0x7b1" target="_blank" rel="noopener noreferrer me"
+        <span>I am a MSc. student in the Data Systems group at the University of Tartu. I received a BSc in Computer Science, and previously worked on networked systems, cloud applications, visualization. I am  interested in distributed and data systems, visualization, sound synthesis, and education. I want to help people by providing better tools for learning and building.</span><div class="social-icons"><a href="https://github.com/0x7b1" target="_blank" rel="noopener noreferrer me"
         title="Github"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
     <path
@@ -164,6 +168,23 @@
     </div>
 </div>
 
+
+<script src="https://npmcdn.com/particlesjs@2.2.2/dist/particles.min.js"></script>
+<canvas class="header__background"></canvas>
+<script>
+  Particles.init({
+    selector: '.header__background',
+    color: '#636e72',
+    maxParticles: 30,
+    connectParticles: true,
+    responsive: [{
+      breakpoint: 300,
+      options: {
+        maxParticles: 10,
+      }
+    }]
+  });
+</script>
     </main><footer class="footer">
     <span>&copy; 2020 <a href="https://0x7b1.github.io/">Carlos Ramos</a></span>
     

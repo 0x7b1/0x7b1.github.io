@@ -2,5 +2,21 @@
 
 {{- partial "index_profile.html" . }}
 
+<script src="https://npmcdn.com/particlesjs@2.2.2/dist/particles.min.js"></script>
+<canvas class="header__background"></canvas>
+<script>
+  Particles.init({
+    selector: '.header__background',
+    color: '#636e72',
+    maxParticles: 30,
+    connectParticles: true,
+    responsive: [{
+      breakpoint: 300,
+      options: {
+        maxParticles: 10,
+      }
+    }]
+  });
+</script>
 
 {{- end }}{{/* end main */}}

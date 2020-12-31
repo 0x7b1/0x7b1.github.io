@@ -86,17 +86,19 @@
 
 .entry-header h3 {
     font-size: 20px;
+    font-weight: 400;
 }
 
 .entry-content {
     margin: 8px 0;
     color: var(--secondary);
-    font-size: 14px;
+    font-size: 0.9em;
     line-height: 1.6;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2
+    -webkit-line-clamp: 2;
+    font-weight: 400;
 }
 
 .entry-footer {

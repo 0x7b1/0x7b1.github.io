@@ -6,27 +6,6 @@
       {{ .Title }}
       {{- if .Draft }}<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>{{- end }}
     </h1>
-    {{- if .Params.hideMeta }}{{ else }}
-    <div class="post-meta">
-      {{- partial "post_meta.html" . -}}
-      {{- if .IsTranslated -}}&nbsp;|&nbsp;
-      <ul class="i18n_list">
-        {{- i18n "translations" | default "Translations"}}:
-        {{- range .Translations }}
-        <li>
-          <a href="{{ .Permalink }}">
-            {{- if (and $.Site.Params.displayFullLangName (.Language.LanguageName)) }}
-            {{- .Language.LanguageName | emojify | humanize -}}
-            {{- else }}
-            {{- .Lang | humanize -}}
-            {{- end -}}
-          </a>
-        </li>
-        {{- end }}
-      </ul>
-      {{- end }}
-    </div>
-    {{- end}}
   </header>
   <!-- {{- partial "cover.html" (dict "cxt" . "IsHome" false) }} -->
   {{- if .Params.ShowToc }}
@@ -52,9 +31,30 @@
       {{- end }}
     </ul>
     {{- end }}
+    {{- if .Params.hideMeta }}{{ else }}
+    <div class="post-meta">
+      {{- partial "post_meta.html" . -}}
+      {{- if .IsTranslated -}}&nbsp;|&nbsp;
+      <ul class="i18n_list">
+        {{- i18n "translations" | default "Translations"}}:
+        {{- range .Translations }}
+        <li>
+          <a href="{{ .Permalink }}">
+            {{- if (and $.Site.Params.displayFullLangName (.Language.LanguageName)) }}
+            {{- .Language.LanguageName | emojify | humanize -}}
+            {{- else }}
+            {{- .Lang | humanize -}}
+            {{- end -}}
+          </a>
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+    {{- end}}
     <!-- {{- if (and .Site.Params.ShowShareButtons (ne .Params.disableShare true) ) }}
       {{- partial "share_icons.html" . }}
-    {{- end }} -->
+      {{- end }} -->
   </footer>
 
   {{- if and ($.Site.Params.comments) (ne .Params.comments false) }}

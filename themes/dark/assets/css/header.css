@@ -66,14 +66,16 @@ body:not(.dark) #sun {
 }
 
 .menu a {
-    font-size: 14px;
-    font-family: AtlasGrotesk-Bold;
+    font-size: 15px;
+    /* font-family: AtlasGrotesk-Bold; */
+    /* font-family: 'IBM Plex Sans', sans-serif; */
+    font-weight: 700;
     /* text-transform: uppercase; */
 }
 
 .menu .active {
-    font-weight: 500;
-    border-bottom: 2px solid currentColor
+    font-weight: 700;
+    border-bottom: 2px solid currentColor;
 }
 
 .lang-switch li,

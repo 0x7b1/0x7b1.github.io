@@ -37,7 +37,7 @@
 }
 
 .social-icons {
-    padding: 12px 0
+    padding: var(--content-gap) 0;
 }
 
 .social-icons a:not(:last-of-type) {

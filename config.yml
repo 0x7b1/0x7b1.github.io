@@ -115,7 +115,7 @@ params:
     enabled: false
     title: Carlos Ramos
     subtitle: >
-      I am a MSc. student in the Data Systems group at the University of Tartu. I received a BSc in Computer Science, and previously worked on networked systems, cloud applications, visualization.
+      I am a MSc. student in the Data Systems group at the University of Tartu. I received a BSc in Computer Science, and previously worked on networked systems, cloud applications, and visualization.
       I am  interested in distributed and data systems, visualization, sound synthesis, and education. I want to help people by providing better tools for learning and building.
 
     imageUrl: "/profile.jpg"

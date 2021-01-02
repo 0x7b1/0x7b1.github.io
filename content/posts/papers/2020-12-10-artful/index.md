@@ -1,8 +1,8 @@
 ---
 author: jc
 title: "Paper review: ARTful Indexing for Main-Memory Databases"
-summary: By this and that
-date: "2020-11-21"
+summary: ART is an space efficient Radix tree for efficient indexing in main memory.
+date: "2020-12-10"
 series: ["blog"]
 ---
 

@@ -1,5 +1,6 @@
 .post-header {
     margin: 0 auto 40px auto;
+    text-align: center;
     /* margin: 0 auto var(--content-gap) auto; */
     /* margin: 24px auto var(--content-gap) auto */
 }
@@ -25,7 +26,7 @@
 .post-meta {
     color: var(--secondary);
     font-size: 12px;
-    display: flex;
+    /* display: flex; */
     flex-wrap: wrap
 }
 
@@ -240,14 +241,15 @@
 }
 
 .post-content img[src*='#center'] {
-    margin: auto
+    margin: auto;
 }
 
 .post-content figure > figcaption {
-    color: var(--primary);
-    font-size: 16px;
-    font-weight: bold;
-    margin: 24px 0 16px;
+    color: var(--secondary);
+    font-size: 15px;
+    text-align: center;
+    font-weight: 300;
+    margin: 12px 0 12px;
 }
 
 .toc {

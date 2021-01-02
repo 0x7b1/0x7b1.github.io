@@ -4,6 +4,7 @@ title: Heatmap Alert
 summary: A tool for automating the structure, documentation and tracking of a new software project.
 date: "2020-06-20"
 series: ["projects"]
+showTOC: true
 cover:
   image: "/covers/heatmap-alert.jpg"
 ---

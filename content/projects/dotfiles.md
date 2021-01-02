@@ -10,7 +10,7 @@ cover:
 
 As of 31th of December 2020, this is how my system looks like.
 
-```
+```text
                    -`                    jc@0x7b1
                   .o+`                   --------
                  `ooo/                   OS: Arch Linux x86_64

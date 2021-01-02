@@ -11,13 +11,13 @@
 <meta name="description" content="Given a simulated vahicle traffic on different cities, this app allows you to visualize the levels of CO2 emmited.and configuration files.">
 <meta name="author" content="jc">
 <link rel="canonical" href="https://0x7b1.github.io/projects/co2-emulator/" />
-<link href="https://0x7b1.github.io/assets/css/stylesheet.min.3d0049017c1b1a8ca8bdbbe74424468742edd3c061a9ee70a811c2d8a706285c.css" integrity="sha256-PQBJAXwbGoyovbvnRCRGh0Lt08Bhqe5wqBHC2KcGKFw=" rel="preload stylesheet"
+<link href="https://0x7b1.github.io/assets/css/stylesheet.min.230f6190ea43f5d9c3df590f4988e1b8f3d7c39515e9a6a16be1b4dad05bb917.css" integrity="sha256-Iw9hkOpD9dnD31kPSYjhuPPXw5UV6aaha&#43;G02tBbuRc=" rel="preload stylesheet"
     as="style">
 
-<link rel="icon" href="https://0x7b1.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://0x7b1.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://0x7b1.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://0x7b1.github.io/apple-touch-icon.png">
+<link rel="icon" href="https://0x7b1.github.io/site/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://0x7b1.github.io/site/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://0x7b1.github.io/site/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://0x7b1.github.io/site/apple-touch-icon.png">
 <link rel="mask-icon" href="https://0x7b1.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
@@ -50,8 +50,8 @@
   "keywords": [
     
   ],
-  "articleBody": "Empty for now\n",
-  "wordCount" : "3",
+  "articleBody": "   Traffic CO2 emission is a constant problem that have an impact into the environment. There are proposed solutions that improve the traffic analysis and operation performance to reduce traffic congestion and increase overall safety. However, these solutions have become increasingly complex due to the inclusion of multiple tools for treating the traffic management at a realistic manner. Emission models, that represent a separate complex task on its own, have been introduced in these systems making them even more difficult to scale. ITS needs to have easy and effective mechanisms for interacting with the existing vehicle infrastructure and be able to accomplish one task right. This project explores the implementation of a system that focuses on the gathering and calculation of CO2 emissions of urban vehicle traffic. The system presented is a cloud-based infrastructure that has been tested using different simulation scenarios with the objective of provide realistic urban traffic behaviour. The work also looks at the value of having a wide range of perspectives to evaluate transport pollution based on the existing retrieved information.\nSimulator The purpose of this simulator is to calculate the emissions caused by a connected urban car traffic in real-time though a web system interface.\n  Components of the system   System Components The presented system relies on connected devices representing the vehicles.\nDevices The system will collect data from a set of connected devices. These devices may not be able to report successfully at the desired rate due to intermittent connectivity. Additionally, this reported data contains a certain rate of error.\nStorage Storage Data collected by devices store the current state of the device entities. They are processed before being stored. The data is also stored for current and future analysis.\nController The system operates with a controller that acts on the input from devices in real-time. Then the data is stored and preprocessed into the storage component. The controller is also used to retrieve data for the Web client application.\nMonitoring The processed data is displayed in a web component that contains tools for visualization. This operates by collecting up and grouping the data of the storage component.\nImplementation   System components of the simulated implementation   The back-end application acts as the message gateway by providing communication over HTTP and potentially over the MQTT protocol. Then, a time-series database, namely InfluxDB, is used to storage received messages as a real time telemetry of vehicles. Data from traffic is published to a common data channel into a stream end-point. Vehicles emit messages to the controller containing the entity id, speed, latitude, longitude, and acceleration. The messages are processed by a function that calculates the emission based on these attributes. It is then possible for the emission to be calculated concurrently. This ensures multiple evaluations while ensuring processing in real time.\nCO2 Simulation An exact and efficient calculation of CO2 emissions depend on many different factors, such as the model of the vehicle, year of fabrication, fuel, engine specifics and other technological features. A good overview of the standard emission methods for vehicle emissions can be seen here. The proposed system uses a microscopic approach of simulation, in which each vehicle hast its own representation. Individual vehicle characteristics may include factors such as vehicle type, weight, speed, acceleration, engine performance, between others. So the level of detail is even higher at sub-microscopic models. They can include vehicle shifting, steering, fuel consumption and so on. Regarding of any type of model, emission can be attained into each flow model. For this reason, the microscopic modeling is used because it helps to calculate the emission of CO2 of passenger vehicles.\nThe method of this paper uses the following definition for the estimated emissions to approximate the generated CO2 emissions as defined by:\n$$ P = c_0 + c_1va + c_2va^2 + c_3v + c_4v^2 + c_5v^3 $$\nwhere \\(P\\) is the emission frequency (in miligrams persecond), c are the emission constants, v is the vehicle’s speed in m/s, and a is the acceleration in \\(m/s^2\\). For this experiment we are going to use the constants \\(9449, 938.4, 0.0, −467.1, 28.26, 0.0\\). A heat-map generally visualizes data intensity at geographic points. As it is shown in the next figure we can navigate and zoom through the polluted areas.\n  Web application in live mode showing the trace of the vehicles as they come     On history mode the option for filtering and showing the layers is available   Evaluation We need a framework to run the simulated agents into a network to make realistic trips that also could provide a test environment. For this, we need to define a network representation of a road network. Using SUMO to make a real-world scenario from scratch is time consuming as one needs to define and constantly tweak every single detail of the network road. We could use the integrated SUMO tools that speed up this process, such as defining a network based on a realistic map from OpenStreetMap.\nWith this described setup, the simulation in ready to run. First the baseline scenario is executed, then it is followed by the Monaco scenario. The simulated data gives a good insight on how this could operate in a real life. Running the scenarios for few moments one can observe the large number of entries and hits in the database. This became a problem when a query was needed to process to keep flexibility. Fortunately InfluxDB allows to group and aggregate in order gain some performance.\n  Baseline map on a small area in the city of Tartu     Monaco SUMO Traffic (MoST)   An experiment ran for 50 minutes. On both cases we can see the emitted CO2 in the heat-map layer. This is modified over time to fit the real-time behavior. As we scale the view with zoom in and out the aggregation is being modified.\nResults Based on the experiment described on the previous sections, this section discusses the obtained results, the benefits of this approach, and its limitations. Testing the first scenario revealed problems on the web application that were not addressed while initially was being developed. This needed improvement in the code for displaying correctly the emissions over time. Another improvement was the code for the calculation of CO2, as the initial implementation of emission did not yield appealing results. The code for the query of the database was also a thing to consider in this regard. In parallel, debugging and running the scenarios on the SUMO graphical interface was crucial to keep the constant feedback.\n  Plot of speed on the Tartu scenario   In terms of CO2 emission calculation, it was compared with the SUMO built-in emission model HBEFA v.2.1 which considers parameters of vehicle such velocity and acceleration. In order to evaluate both under same conditions, the test was run on the same scenarios. A quantitative estimation is used to compare both models. According to the figure 11 the SUMO model generates 5643334 mg of CO2 emission, while the method of this paper gets 5643443 mg. On the second scenario the SUMO model generates 8554854mg of CO2 emission, while the method of this paper gets 7454854 mg.\n  SUMO CO2 values vs own implementation shows a mean error or 15% on MoST scenario   It is always discussed in the ITS traffic literature that electric cars emit less emission than old traditional cars. This is a consideration and improvement that could be added to a new version of the system. We could also add more pollutants based on vehicle and environment parameters. Also a point to consider is the realistic representation of a city because if we were to run on it we could make better decisions in terms of ITS policies. Note, that this system was only concerned with CO2 emissions and its applicability to the existing devices (i.e. mobile phones) into a visualization tool taking into consideration its reliability through a distributed approach. The ultimate goal of this kind of simulations is to make effect on improving the environment quality.\nConclusions With an increasing number of connected vehicles on the road, traffic congestion has become a daily problem affecting several aspects of modern society. One of the problems of traffic that concerns more to the environment is the pollution through the CO2 emission. We also have noticed that nowadays we have an scenario of vehicle drivers somehow connected to a cloud service, this can be leveraged to use them in order to get estimation of CO2 emission into the current state of traffic. A system was proposed to fulfill this requirement. It was discussed the necessity for building a solution and why it should be developed in a distributed way. Hopefully the visualization tool provides an insight in the decision making of ITS policies.\nLinks  Source code  ",
+  "wordCount" : "1450",
   "inLanguage": "en",
   "image":"https://0x7b1.github.io/covers/co2.png","datePublished": "2019-10-17T00:00:00Z",
   "dateModified": "2019-10-17T00:00:00Z",
@@ -68,7 +68,7 @@
     "name": "Carlos Ramos",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://0x7b1.github.io/favicon.ico"
+      "url": "https://0x7b1.github.io/site/favicon.ico"
     }
   }
 }
@@ -149,16 +149,142 @@
     <h1 class="post-title">
       CO2 Emission Simulator
     </h1>
-  </header>
-  
-  <div class="post-content">
-<p><em>Empty for now</em></p>
-
-</div>
-  <footer class="post-footer">
     <div class="post-meta">Oct 17, 2019
 
     </div>
+  </header>
+  
+  <div class="toc">
+    <details >
+      <summary accesskey="c" title="(Alt + C)">
+        <div class="details">Table of Contents</div>
+      </summary>
+      <blockquote><ul><li>
+        <a href="#simulator" aria-label="Simulator">Simulator</a><ul>
+            <li>
+        <a href="#system-components" aria-label="System Components">System Components</a><ul>
+            <li>
+        <a href="#devices" aria-label="Devices">Devices</a></li><li>
+        <a href="#storage" aria-label="Storage">Storage</a></li><li>
+        <a href="#controller" aria-label="Controller">Controller</a></li><li>
+        <a href="#monitoring" aria-label="Monitoring">Monitoring</a></li></ul>
+    </li></ul>
+    </li><li>
+        <a href="#implementation" aria-label="Implementation">Implementation</a><ul>
+            <li>
+        <a href="#co2-simulation" aria-label="CO2 Simulation">CO2 Simulation</a></li></ul>
+    </li><li>
+        <a href="#evaluation" aria-label="Evaluation">Evaluation</a><ul>
+            <li>
+        <a href="#results" aria-label="Results">Results</a></li></ul>
+    </li><li>
+        <a href="#conclusions" aria-label="Conclusions">Conclusions</a></li><li>
+        <a href="#links" aria-label="Links">Links</a></li></ul>
+      </blockquote>
+    </details>
+  </div>
+  <div class="post-content">
+
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+<p>Traffic CO2 emission is a constant problem that have an impact into the environment. There are proposed solutions that improve the traffic analysis and operation performance to reduce traffic congestion and increase overall safety. However, these solutions have become increasingly complex due to the inclusion of multiple tools for treating the traffic management at a realistic manner. Emission models, that represent a separate complex task on its own, have been introduced in these systems making them even more difficult to scale. ITS needs to have easy and effective mechanisms for interacting with the existing vehicle infrastructure and be able to accomplish one task right. This project explores the implementation of a system that focuses on the gathering and calculation of CO2 emissions of urban vehicle traffic. The system presented is a cloud-based infrastructure that has been tested using different simulation scenarios with the objective of provide realistic urban traffic behaviour. The work also looks at the value of having a wide range of perspectives to evaluate transport pollution based on the existing retrieved information.</p>
+<h2 id="simulator">Simulator<a hidden class="anchor" aria-hidden="true" href="#simulator">#</a></h2>
+<p>The purpose of this simulator is to calculate the emissions caused by a connected urban car traffic in real-time though a web system interface.</p>
+<figure>
+    <img src="images/diagram1.png#center" width="70%"/> <figcaption>
+            Components of the system
+        </figcaption>
+</figure>
+
+<h3 id="system-components">System Components<a hidden class="anchor" aria-hidden="true" href="#system-components">#</a></h3>
+<p>The presented system relies on connected devices representing the vehicles.</p>
+<h4 id="devices">Devices<a hidden class="anchor" aria-hidden="true" href="#devices">#</a></h4>
+<p>The system will collect data from a set of connected devices. These devices may not be able to report successfully at the desired rate due to intermittent connectivity. Additionally, this reported data contains a certain rate of error.</p>
+<h4 id="storage">Storage<a hidden class="anchor" aria-hidden="true" href="#storage">#</a></h4>
+<p>Storage Data collected by devices store the current state of the device entities. They are processed before being stored. The data is also stored for current and future analysis.</p>
+<h4 id="controller">Controller<a hidden class="anchor" aria-hidden="true" href="#controller">#</a></h4>
+<p>The system operates with a controller that acts on the input from devices in real-time. Then the data is stored and preprocessed into the storage component. The controller is also used to retrieve data for the Web client application.</p>
+<h4 id="monitoring">Monitoring<a hidden class="anchor" aria-hidden="true" href="#monitoring">#</a></h4>
+<p>The processed data is displayed in a web component that contains tools for visualization. This operates by collecting up and grouping the data of the storage component.</p>
+<h2 id="implementation">Implementation<a hidden class="anchor" aria-hidden="true" href="#implementation">#</a></h2>
+<figure>
+    <img src="images/diagram2.jpg#center" width="70%"/> <figcaption>
+            System components of the simulated implementation
+        </figcaption>
+</figure>
+
+<p>The back-end application acts as the message gateway by providing communication over HTTP and potentially over the MQTT protocol. Then, a time-series database, namely InfluxDB, is used to storage received messages as a real time telemetry of vehicles. Data from traffic is published to a common data channel into a stream end-point. Vehicles emit messages to the controller containing the entity id, speed, latitude, longitude, and acceleration. The messages are processed by a function that calculates the emission based on these attributes. It is then possible for the emission to be calculated concurrently. This ensures multiple evaluations while ensuring processing in real time.</p>
+<h3 id="co2-simulation">CO2 Simulation<a hidden class="anchor" aria-hidden="true" href="#co2-simulation">#</a></h3>
+<p>An exact and efficient calculation of CO2 emissions depend on many different factors, such as the model of the vehicle, year of fabrication, fuel, engine specifics and other technological features. A good overview of the standard emission methods for vehicle emissions can be seen here. The proposed system uses a microscopic approach of simulation, in which each vehicle hast its own representation. Individual vehicle characteristics may include factors such as vehicle type, weight, speed, acceleration, engine performance, between others. So the level of detail is even higher at sub-microscopic models. They can include vehicle shifting, steering, fuel consumption and so on. Regarding of any type of model, emission can be attained into each flow model. For this reason, the microscopic modeling is used because it helps to calculate the emission of CO2 of passenger vehicles.</p>
+<p>The method of this paper uses the following definition for the estimated emissions to approximate the generated CO2 emissions as defined by:</p>
+<p>$$
+P = c_0 + c_1va + c_2va^2 + c_3v + c_4v^2 + c_5v^3
+$$</p>
+
+
+where \(P\) is the emission frequency (in miligrams persecond), c are the emission constants, v is the vehicle’s speed in m/s, and a is the acceleration in \(m/s^2\).
+For this experiment we are going to use the constants \(9449, 938.4, 0.0, −467.1, 28.26, 0.0\).
+
+
+<p>A heat-map generally visualizes data intensity at geographic points. As it is shown in the next figure we can navigate and zoom through the polluted areas.</p>
+<figure>
+    <img src="images/app1.jpg#center"/> <figcaption>
+            Web application in live mode showing the trace of the vehicles as they come
+        </figcaption>
+</figure>
+
+<figure>
+    <img src="images/app2.jpg#center"/> <figcaption>
+            On history mode the option for filtering and showing the layers is available
+        </figcaption>
+</figure>
+
+<h2 id="evaluation">Evaluation<a hidden class="anchor" aria-hidden="true" href="#evaluation">#</a></h2>
+<p>We need a framework to run the simulated agents into a network to make realistic trips that also could provide a test environment. For this, we need to define a network representation of a road network. Using SUMO to make a real-world scenario from scratch is time consuming as one needs to define and constantly tweak every single detail of the network road. We could use the integrated SUMO tools that speed up this process, such as defining a network based on a realistic map from OpenStreetMap.</p>
+<p>With this described setup, the simulation in ready to run. First the baseline scenario is executed, then it is followed by the Monaco scenario. The simulated data gives a good insight on how this could operate in a real life. Running the scenarios for few moments one can observe the large number of entries and hits in the database. This became a problem when a query was needed to process to keep flexibility. Fortunately InfluxDB allows to group and aggregate in order gain some performance.</p>
+<figure>
+    <img src="images/map1.png#center"/> <figcaption>
+             Baseline map on a small area in the city of Tartu
+        </figcaption>
+</figure>
+
+<figure>
+    <img src="images/map2.png#center"/> <figcaption>
+            Monaco SUMO Traffic (MoST)
+        </figcaption>
+</figure>
+
+<p>An experiment ran for 50 minutes. On both cases we can see the emitted CO2 in the heat-map layer. This is modified over time to fit the real-time behavior. As we scale the view with zoom in and out the aggregation is being modified.</p>
+<h3 id="results">Results<a hidden class="anchor" aria-hidden="true" href="#results">#</a></h3>
+<p>Based on the experiment described on the previous sections, this section discusses the obtained results, the benefits of this approach, and its limitations. Testing the first scenario revealed problems on the web application that were not addressed while initially was being developed. This needed improvement in the code for displaying correctly the emissions over time. Another improvement was the code for the calculation of CO2, as the initial implementation of emission did not yield appealing results. The code for the query of the database was also a thing to consider in this regard. In parallel, debugging and running the scenarios on the SUMO graphical interface was crucial to keep the constant feedback.</p>
+<figure>
+    <img src="images/map_speeds_tartu_1.png#center" width="70%"/> <figcaption>
+            Plot of speed on the Tartu scenario
+        </figcaption>
+</figure>
+
+<p>In terms of CO2 emission calculation, it was compared with the SUMO built-in emission model HBEFA v.2.1 which considers parameters of vehicle such velocity and acceleration. In order to evaluate both under same conditions, the test was run on the same scenarios. A quantitative estimation is used to compare both models. According to the figure 11 the SUMO model generates 5643334 mg of CO2 emission, while the method of this paper gets 5643443 mg. On the second scenario the SUMO model generates 8554854mg of CO2 emission, while the method of this paper gets 7454854 mg.</p>
+<figure>
+    <img src="images/monaco_emissions_plot.png#center" width="70%"/> <figcaption>
+            SUMO CO2 values vs own implementation shows a mean error or 15% on MoST scenario
+        </figcaption>
+</figure>
+
+<p>It is always discussed in the ITS traffic literature that electric cars emit less emission than old traditional cars. This is a consideration and improvement that could be added to a new version of the system. We could also add more pollutants based on vehicle and environment parameters. Also a point to consider is the realistic representation of a city because if we were to run on it we could make better decisions in terms of ITS policies. Note, that this system was only concerned with CO2 emissions and its applicability to the existing devices (i.e. mobile phones) into a visualization tool taking into consideration its reliability through a distributed approach. The ultimate goal of this kind of simulations is to make effect on improving the environment quality.</p>
+<h2 id="conclusions">Conclusions<a hidden class="anchor" aria-hidden="true" href="#conclusions">#</a></h2>
+<p>With an increasing number of connected vehicles on the road, traffic congestion has become a daily problem affecting several aspects of modern society. One of the problems of traffic that concerns more to the environment is the pollution through the CO2 emission. We also have noticed that nowadays we have an scenario of vehicle drivers somehow connected to a cloud service, this can be leveraged to use them in order to get estimation of CO2 emission into the current state of traffic. A system was proposed to fulfill this requirement. It was discussed the necessity for building a solution and why it should be developed in a distributed way. Hopefully the visualization tool provides an insight in the decision making of ITS policies.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://github.com/0x7b1/co2-emission-simulator">Source code</a></li>
+</ul>
+
+</div>
+  <footer class="post-footer">
     
   </footer>
 </article>

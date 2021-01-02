@@ -5,19 +5,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>MIT&#39;s 6.824 Distributed System Project course | Carlos Ramos</title>
+<title>MIT&#39;s 6.824 Distributed System Course | Carlos Ramos</title>
 
 <meta name="keywords" content="" />
-<meta name="description" content="Read academic papers of distributed and data systems and implementation of the Raft consensus algorithm in Go.">
+<meta name="description" content="This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service.">
 <meta name="author" content="jc">
 <link rel="canonical" href="https://0x7b1.github.io/projects/mit-6.824-project/" />
-<link href="https://0x7b1.github.io/assets/css/stylesheet.min.3d0049017c1b1a8ca8bdbbe74424468742edd3c061a9ee70a811c2d8a706285c.css" integrity="sha256-PQBJAXwbGoyovbvnRCRGh0Lt08Bhqe5wqBHC2KcGKFw=" rel="preload stylesheet"
+<link href="https://0x7b1.github.io/assets/css/stylesheet.min.230f6190ea43f5d9c3df590f4988e1b8f3d7c39515e9a6a16be1b4dad05bb917.css" integrity="sha256-Iw9hkOpD9dnD31kPSYjhuPPXw5UV6aaha&#43;G02tBbuRc=" rel="preload stylesheet"
     as="style">
 
-<link rel="icon" href="https://0x7b1.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://0x7b1.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://0x7b1.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://0x7b1.github.io/apple-touch-icon.png">
+<link rel="icon" href="https://0x7b1.github.io/site/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://0x7b1.github.io/site/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://0x7b1.github.io/site/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://0x7b1.github.io/site/apple-touch-icon.png">
 <link rel="mask-icon" href="https://0x7b1.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
@@ -28,8 +28,8 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
-<meta property="og:title" content="MIT&#39;s 6.824 Distributed System Project course" />
-<meta property="og:description" content="Read academic papers of distributed and data systems and implementation of the Raft consensus algorithm in Go." />
+<meta property="og:title" content="MIT&#39;s 6.824 Distributed System Course" />
+<meta property="og:description" content="This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://0x7b1.github.io/projects/mit-6.824-project/" />
 <meta property="og:image" content="https://info.container-solutions.com/hubfs/Imported_Blog_Media/figure1_raft-1.png" /><meta property="article:published_time" content="2020-09-02T00:00:00+00:00" />
@@ -37,21 +37,21 @@
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://info.container-solutions.com/hubfs/Imported_Blog_Media/figure1_raft-1.png" />
-<meta name="twitter:title" content="MIT&#39;s 6.824 Distributed System Project course"/>
-<meta name="twitter:description" content="Read academic papers of distributed and data systems and implementation of the Raft consensus algorithm in Go."/>
+<meta name="twitter:title" content="MIT&#39;s 6.824 Distributed System Course"/>
+<meta name="twitter:description" content="This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service."/>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "MIT's 6.824 Distributed System Project course",
-  "name": "MIT\u0027s 6.824 Distributed System Project course",
-  "description": "Read academic papers of distributed and data systems and implementation of the Raft consensus algorithm in Go.",
+  "headline": "MIT's 6.824 Distributed System Course",
+  "name": "MIT\u0027s 6.824 Distributed System Course",
+  "description": "This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service.",
   "keywords": [
     
   ],
-  "articleBody": "Links  Source code  ",
-  "wordCount" : "3",
+  "articleBody": "This project is based on the Lab assignments used in MIT’s distributed systems course (6.284). It is divided in 3 main parts and is expected to be implemented using the Go programming language.\nPart I: Distributed MapReduce Go to the Lab’s description\nThe most important parts of the Mapreduce model are:\n The Figure 1 of the paper. The Map and Reduce functions  map (k1, v1) - list(k2, v2) reduce (k2, list(v2)) - list(v2) In the MapReduce model there are two types of nodes: master and worker. The master is responsible for dividing the task into M tasks. As long as there is idle worker, it will execute the task map, and R results will be generated and stored on disk. The worker who executes reduce later will get the corresponding map result from other workers through RPC according to his number (0 to R-1). The reducer will get a number (k2, list(v2)) of key-value pairs, and then pass this to the reduce-function (user-defined), and the result will be stored and it will be done. The next step is to merge the results of reduce.    A classic example is the word-counter.\n Having a bunch of files that need to count characters. First, step is to assign the files to each map. It will count the characters and output key-value pairs:  Hello, my name is x, your name? Hello, your name is nice  The above two sentences, through map, it’s assigned to two map operations:  1:       2:      |------------reduce 1--------------|----------- ---reduce 2------------------|  Before throwing the output key-value pairs into the corresponding reduce, we need to obtain its set:     === reduce 1     === reduce 2  Finally, reduce will count its value:  reduce 1 ===    reduce 2 ===     During the whole stage, we rely on a master and several workers to conduct orderly operations First, we start a master and three workers; the master will tell the workers that it is now in the map phase, you execute file 1, you execute file 2 It is necessary for the worker to report to the master that he has done it. Because this will tell the master whether it should proceed to the next reduce phase. If all files are processed, the master will adjust the status to reduce: But when we actually come to the experiment, we need to consider some issues.\n A master, which members need to be included in the worker How to represent tasks and how to distribute tasks First conceive the whole experiment. We’d better not be mechanically process-oriented, that is, read the file list - for loop, traverse the file list - call (rpc) n workers remotely at the same time, and pass in the file name in the master. , Let it execute Map; master maintains a key-value pair to know whether all files have completed the Map phase; then perform Reduce. Knowing the entire process framework, we return to the first question, what kind of member variables should be designed. Map task, we need it to process a separate file, so there is a string type file, a task must have its own ID, and we must know which Worker we work for (workerid), and we also need to know this task Is it done? (status); the same is true for Reduce. Master Structure, the master needs to maintain two task queues:   A set of pointer lists for saving tasks locally, MapTasks \u0026 ReduceTasks; A set of channels MapTasksChan \u0026 ReduceTasksChan for asynchronous communication, Worker will request tasks remotely through rpc; The number of NReduce, given by initialization, 10; NMap represents the number of files, calculated when the master is initialized; Represents the number of completed tasks NCompleteXXX;  Process, after the master initializes some of its member variables, it will directly start to generate Map tasks. This process will write the Map tasks into the queue, and at the same time wait for the worker’s RPC call to take away the secondary tasks. It is worth noting that the allocation task in the above figure uses select, which will respond selectively according to the arrival of the channel, that is, return to the Map task when the Map task arrives, and return to the Reduce task when the Reduce task arrives first; MonitorMapTask() , This function will monitor whether the Map task is completed, which is very important because it will hang up a worker later in the test case.  Part II: Raft, a replicated state machine protocol In this lab the goal is to build a fault-tolerant key/value storage system, which is divided into three parts:\n Implement Raft, a replicated state machine protocol Build a key/value service on Raft Share among multiple replicated state machines Service for higher performance  Nodes have three states, and the initial state of all nodes is Follower.\n Follower Candidate Leader  Basic Structures At first, you may not know where to start. First, write a part of the framework according to the hints given in the course document.\n Add any state you need to the Raft struct in raft.go. You’ll also need to define a struct to hold information about each log entry. Your code should follow Figure 2 in the paper as closely as possible.\n type Log struct { Command interface{} Term int32 } // // A Go object implementing a single Raft peer. // type Raft struct { mu sync.Mutex // Lock to protect shared access to this peer's state  peers []*labrpc.ClientEnd // RPC end points of all peers  persister *Persister // Object to hold this peer's persisted state  me int // this peer's index into peers[]  // counts int  // Your data here (2A, 2B, 2C).  // Look at the paper's Figure 2 for a description of what  // state a Raft server must maintain.  // Persistent state on all servers  logs []Log votedFor int currentTerm int32 // State  state int32 // Volatile state on all server  commitIndex int lastApplied int VoteGrantedCount int // Volatile state on leaders  nextIndex[] int matchIndex[] int // timer  electionTimer *time.Timer voteCh chan struct{} }  Fill in the RequestVoteArgs and RequestVoteReply structs.\n type RequestVoteArgs struct { // Your data here (2A, 2B).  Term int CandidateId int LastLogIndex int LastLogTerm int } // field names must start with capital letters! type RequestVoteReply struct { // Your data here (2A).  Term int VoteGranted bool }  Modify Make() to create a background goroutine that will kick off leader election periodically by sending out RequestVote RPCs when it hasn’t heard from another peer for a while.\n The preparation of Make is very important, it is actually the initialization process of Raft. Finally, the loop of the state machine is started.\nfunc Make(peers []*labrpc.ClientEnd, me int, persister *Persister, applyCh chan ApplyMsg) *Raft { rf := \u0026Raft{} rf.peers = peers rf.persister = persister rf.me = me // Your initialization code here (2A, 2B, 2C).  rf.currentTerm = 0; rf.votedFor = -1; rf.VoteGrantedCount = 0; rf.logs = make([]Log, 0) rf.commitIndex = -1 rf.lastApplied = -1 rf.state = FOLLOWER rf.nextIndex = make([]int, len(rf.peers)) rf.matchIndex = make([]int, len(rf.peers)) // initialize from state persisted before a crash  rf.readPersist(persister.ReadRaftState()) go rf.raftLoop() return rf }  This way a peer will learn who is the leader, if there is already a leader, or become the leader itself. Implement the RequestVote() RPC handler so that servers will vote for one another.\n Implementation func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply), as explained in the RequestVote RPC part of the paper, Recever implememtation, is transformed into the following code:\nfunc (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) { // Your code here (2A, 2B).  rf.mu.Lock() defer rf.mu.Unlock() if args.Term false } else if args.Term == rf.currentTerm { if (rf.votedFor == -1 || rf.votedFor == args.CandidateId) \u0026\u0026 args.LastLogIndex = len(rf.logs){ // Only when the node does not vote for the candidate or only for the current candidate, the vote is successful. Ensure that a node votes twice  reply.VoteGranted = true rf.votedFor = args.CandidateId; fmt.Printf(\"Server %d voted for Server %d\\n\", rf.me, args.CandidateId) // rf.resetTimer()  } else { reply.VoteGranted = false } } else { // currentTerm is smaller than the candidate  rf.switchTo(FOLLOWER) rf.currentTerm = args.Term rf.votedFor = args.CandidateId reply.VoteGranted = true } reply.Term = rf.currentTerm if reply.VoteGranted == true { go func() { rf.voteCh struct{}{} }() } }  To implement heartbeats, define an AppendEntries RPC struct (though you may not need all the arguments yet), and have the leader send them out periodically.\n type AppendEntryArgs struct { term int // leader's term  leaderId int // so follower can redirect clients  prevLogIndex int // index of log entry immediately preceding new ones  prevLogTerm int // term of prevLogIndex entry  entries []Log // (empty for heartbeat; may send more than one for efficiency)  leaderCommit int // leader's commitIndex } type AppendEntryReply struct { term int // currentTerm, for leader to update itself  success bool // true if follwer contained entry matching prevLogTerm and prevLogIndex } func (rf *Raft)sendAppendEntries(server int , args *AppendEntryArgs, reply *AppendEntryReply) { ok := rf.peers[server].Call(\"Raft.AppendEntries\", args, reply) return ok }  Make sure the election timeouts in different peers don’t always fire at the same time, or else all peers will vote only for themselves and no one will become the leader. In RequestVotefunction, we added a judgment: only if this node did not vote for any candidate or ballot to the current candidates, this is the ticket to success. Ensure that a node votes twice\n if (rf.votedFor == -1 || rf.voteFor == args.CandidateId) \u0026\u0026 args.LastLogIndex = len(rf.logs){ reply.VoteGranted = true rf.votedFor = args.CandidateId; } Function implementation  First realize the atomic operations of state acquisition, GetTerm and state judgment. The conffollowing functions are also used when checking in (if you run the test error, you need to check whether the function is implemented).  // atomic operations func (rf *Raft) getTerm() int32 { return atomic.LoadInt32(\u0026rf.currentTerm) } func (rf *Raft) isState(state int32) bool { return atomic.LoadInt32(\u0026rf.state) == state } // return currentTerm and whether this server // believes it is the leader. func (rf *Raft) GetState() (int, bool) { var term int var isleader bool // Your code here (2A).  term = int(rf.getTerm()) isleader = rf.isState(LEADER) return term, isleader } Realize the reply of request to vote, handle request and handle request to vote.\n func (rf *Raft) broadcastVoteReq() func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool  Realize request to add Log item, handle append request and handle request append reply. The implementation of PartA only stays at using AppendEntries to maintain the existence of the Leader, and does not actually change the Log.\n func (rf *Raft) sendAppendEntries(server int , args *AppendEntryArgs, reply *AppendEntryReply) bool func (rf *Raft) broadcastAppendEntries() func (rf *Raft) AppendEntries(args *AppendEntryArgs, reply *AppendEntryReply)  To achieve randomness, Golang’s timer + rand is enough. The following two functions implement random time generation and Timer reset.\nfunc randElectionDuration() time.Duration { r := rand.New(rand.NewSource(time.Now().UnixNano())) return time.Millisecond * time.Duration(r.Int63n(ELEC_TIME_MAX-ELEC_TIME_MIN) + ELEC_TIME_MIN) } func (rf *Raft) resetTimer() { newTimeout := randElectionDuration() rf.electionTimer.Reset(newTimeout) } The last and most important function is the switching logic between Raft’s states, which is Raft’s main loop.\nfunc (rf *Raft) raftLoop() { rf.electionTimer = time.NewTimer(randElectionDuration()) for { switch atomic.LoadInt32(\u0026rf.state) { case FOLLOWER: select { case case case CANDIDATE: rf.mu.Lock() select { case // election time out ， what we should do? do it again  rf.startElection() default: // check if it has collected enough vote  if rf.VoteGrantedCount  len(rf.peers)/2 { rf.switchTo(LEADER) } } rf.mu.Unlock() case LEADER: rf.broadcastAppendEntries() time.Sleep(HEART_BEAT) } } } Part III: Fault-tolerant key/value storage service This experiment is the third experiment of the course. It completes a key-value system based on the raft protocol.\nThe service must support 3 operations\nPut ( key , value ) : change the value of key Append ( key , arg ) : add value to the value of key Get ( key ) : return value  When packet loss is not performed and the case of realizing servers fail, it is necessary to provide the client sequential consistency of api, call Put, Append a Get3 and api, performed in the same order in all the server, and having at-most-once the A suggested plan for semantics is: first complete server.gothe Opstructure in progress , and then complete server.gothe PutAppend()sum Get()operation. In operation, it should be called first Start(), and when the log commits, reply to the client\n  After the call Start(), kvraft servers will wait for the raft log to reach an agreement. By applyChobtaining consistent commands, we need to consider how to arrange the code so that it can be read continuously applyCh, and other commands can also be executed. We need to deal with the case: the leader is called Start(), but leadership is lost before log commit. In this case, the code should resend the request to the new leader. One way is that the server needs to detect that it is no longer the leader, and returns an unused request on the index by checking the same start. The other way is by calling GetState(), but if there is a network partition, it may not know that it is no longer the leader. In this case, both the client and server are in the network partition, so they can wait indefinitely until the network is restored A kvraft server should not complete the Get()operation if it cannot get the majority, because it may not get the latest data.  Need to request a number for each client To ensure that the memory is released quickly, so the next request can be brought with the next request\nCurrent problem: leader changes frequently:\nfunc (ck * Clerk) Get(key string) string { args := GetArgs { Key : key } for { for _ , c := range ck . servers { time . Sleep ( time . Millisecond * 1000) reply := GetReply { } ok := c . Call (\"RaftKV.Get\" , \u0026args , \u0026reply) if ok \u0026\u0026 !reply.WrongLeader { return reply.Value } } } return \"\" } If there is no sleep here, it is equivalent to that the client is constantly in START. The problem is that the server is constantly processing the START command, causing the normal heartbeat to be unable to complete, and frequent changes to the leader occur. The problem is very serious. Seriously, what should I do? Later, optimization was made. For read operations, chan is not used, which is not a problem.\nindex := -1 Term := -1 isLeader := true if rf . state != StateLeader { isLeader = false return index , term , isLeader } Give each client a number, and then each request grows sequentially\nselect { case op := \"index:%d commited:%v\", index, commited) return commited // The timeout here is actually very easy to understand, because it was the leader at the beginning, but before the log got the commit, the leadership was lost. At this time  // If there is no timeout mechanism, it will block forever  // Or because the leader at this time is the leader in a partition, it can only be blocked forever  // So also need timeout  case //kv.logger.Info(\"index:%d %s timeout after %v\", index, entry.Type, AppendTimeOut)  return false } Links  Source code  ",
+  "wordCount" : "2560",
   "inLanguage": "en",
   "image":"https://info.container-solutions.com/hubfs/Imported_Blog_Media/figure1_raft-1.png","datePublished": "2020-09-02T00:00:00Z",
   "dateModified": "2020-09-02T00:00:00Z",
@@ -68,7 +68,7 @@
     "name": "Carlos Ramos",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://0x7b1.github.io/favicon.ico"
+      "url": "https://0x7b1.github.io/site/favicon.ico"
     }
   }
 }
@@ -147,21 +147,403 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title">
-      MIT&#39;s 6.824 Distributed System Project course
+      MIT&#39;s 6.824 Distributed System Course
     </h1>
+    <div class="post-meta">Sep 2, 2020
+
+    </div>
   </header>
   
+  <div class="toc">
+    <details >
+      <summary accesskey="c" title="(Alt + C)">
+        <div class="details">Table of Contents</div>
+      </summary>
+      <blockquote><ul><li>
+        <a href="#part-i-distributed-mapreduce" aria-label="Part I: Distributed MapReduce">Part I: Distributed MapReduce</a></li><li>
+        <a href="#part-ii-raft-a-replicated-state-machine-protocol" aria-label="Part II: Raft, a replicated state machine protocol">Part II: Raft, a replicated state machine protocol</a><ul>
+            <ul>
+            <li>
+        <a href="#basic-structures" aria-label="Basic Structures">Basic Structures</a></li></ul>
+        <li>
+        <a href="#function-implementation" aria-label="Function implementation">Function implementation</a></li></ul>
+    </li><li>
+        <a href="#part-iii-fault-tolerant-keyvalue-storage-service" aria-label="Part III: Fault-tolerant key/value storage service">Part III: Fault-tolerant key/value storage service</a></li><li>
+        <a href="#links" aria-label="Links">Links</a></li></ul>
+      </blockquote>
+    </details>
+  </div>
   <div class="post-content">
-<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<p>This project is based on the Lab assignments used in MIT&rsquo;s distributed systems course (6.284). It is divided in 3 main parts and is expected to be implemented using the Go programming language.</p>
+<h2 id="part-i-distributed-mapreduce">Part I: Distributed MapReduce<a hidden class="anchor" aria-hidden="true" href="#part-i-distributed-mapreduce">#</a></h2>
+<p><a href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html">Go to the Lab&rsquo;s description</a></p>
+<p>The most important parts of the Mapreduce model are:</p>
 <ul>
-<li><a href="https://github.com/0x7b1/cellular-automata-fluid-simulation">Source code</a></li>
+<li>The Figure 1 of the paper.</li>
+<li>The Map and Reduce functions
+<ul>
+<li><code>map (k1, v1) -&gt; list(k2, v2)</code></li>
+<li><code>reduce (k2, list(v2)) -&gt; list(v2)</code>
+In the MapReduce model there are two types of nodes: master and worker.
+The master is responsible for dividing the task into M tasks. As long as there is idle worker, it will execute the task map, and R results will be generated and stored on disk.
+The worker who executes reduce later will get the corresponding map result from other workers through RPC according to his number (0 to R-1).
+The reducer will get a number (k2, list(v2)) of key-value pairs, and then pass this to the reduce-function (user-defined), and the result will be stored and it will be done.
+The next step is to merge the results of reduce.</li>
+</ul>
+</li>
+</ul>
+<p>A classic example is the word-counter.</p>
+<ul>
+<li>Having a bunch of files that need to count characters. First, step is to assign the files to each map. It will count the characters and output key-value pairs:</li>
+</ul>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Hello, my name is x, your name?
+Hello, your name is nice
+</code></pre></div><ul>
+<li>The above two sentences, through map, it&rsquo;s assigned to two map operations:</li>
+</ul>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">1: &lt;hello,1&gt; &lt;my,1&gt; &lt;name,2&gt;        &lt;is,1&gt; &lt;x,1&gt; &lt;your,1&gt;
+2: &lt;hello,1&gt; &lt;name,1&gt; &lt;is,1&gt;        &lt;your,1&gt; &lt;nice,1&gt;
+|------------reduce 1--------------|----------- ---reduce 2------------------|
+</code></pre></div><ul>
+<li>Before throwing the output key-value pairs into the corresponding reduce, we need to obtain its set:</li>
+</ul>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&lt;hello,&lt;1,1&gt;&gt; &lt;my,1&gt; &lt;name,&lt;2,1&gt;&gt; ===&gt; reduce 1
+&lt;is,&lt;1,1&gt;&gt; &lt;x,1&gt; &lt;your,&lt;1,1 &gt;&gt; &lt;nice,1&gt; ===&gt; reduce 2
+</code></pre></div><ul>
+<li>Finally, reduce will count its value:</li>
+</ul>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">reduce 1 ===&gt; &lt;hello,2&gt; &lt;my,1&gt; &lt;name,3&gt;
+reduce 2 ===&gt; &lt;is,2&gt; &lt;x,1&gt; &lt;your,2&gt; &lt;nice,1&gt;
+</code></pre></div><p>During the whole stage, we rely on a master and several workers to conduct orderly operations
+First, we start a master and three workers; the master will tell the workers that it is now in the map phase, you execute file 1, you execute file 2
+It is necessary for the worker to report to the master that he has done it. Because this will tell the master whether it should proceed to the next reduce phase. If all files are processed, the master will adjust the status to reduce:
+But when we actually come to the experiment, we need to consider some issues.</p>
+<ol>
+<li>A master, which members need to be included in the worker</li>
+<li>How to represent tasks and how to distribute tasks
+First conceive the whole experiment. We&rsquo;d better not be mechanically process-oriented, that is, read the file list -&gt; for loop, traverse the file list -&gt; call (rpc) n workers remotely at the same time, and pass in the file name in the master. , Let it execute Map; master maintains a key-value pair to know whether all files have completed the Map phase; then perform Reduce.
+Knowing the entire process framework, we return to the first question, what kind of member variables should be designed.</li>
+<li><strong>Map task</strong>, we need it to process a separate file, so there is a string type file, a task must have its own ID, and we must know which Worker we work for (workerid), and we also need to know this task Is it done? (status); the same is true for Reduce.</li>
+<li><strong>Master Structure</strong>, the master needs to maintain two task queues:</li>
+</ol>
+<ul>
+<li>A set of pointer lists for saving tasks locally, MapTasks &amp; ReduceTasks;</li>
+<li>A set of channels MapTasksChan &amp; ReduceTasksChan for asynchronous communication, Worker will request tasks remotely through rpc; The number of NReduce, given by initialization, 10; NMap represents the number of files, calculated when the master is initialized; Represents the number of completed tasks NCompleteXXX;</li>
+</ul>
+<ol start="3">
+<li><strong>Process</strong>, after the master initializes some of its member variables, it will directly start to generate Map tasks. This process will write the Map tasks into the queue, and at the same time wait for the worker&rsquo;s RPC call to take away the secondary tasks.
+It is worth noting that the allocation task in the above figure uses select, which will respond selectively according to the arrival of the channel, that is, return to the Map task when the Map task arrives, and return to the Reduce task when the Reduce task arrives first; MonitorMapTask() , This function will monitor whether the Map task is completed, which is very important because it will hang up a worker later in the test case.</li>
+</ol>
+<h2 id="part-ii-raft-a-replicated-state-machine-protocol">Part II: Raft, a replicated state machine protocol<a hidden class="anchor" aria-hidden="true" href="#part-ii-raft-a-replicated-state-machine-protocol">#</a></h2>
+<p>In this lab the goal is to build a fault-tolerant key/value storage system, which is divided into three parts:</p>
+<ul>
+<li>Implement Raft, a replicated state machine protocol</li>
+<li>Build a key/value service on Raft</li>
+<li>Share among multiple replicated state machines Service for higher performance</li>
+</ul>
+<p>Nodes have three states, and the initial state of all nodes is Follower.</p>
+<ul>
+<li>Follower</li>
+<li>Candidate</li>
+<li>Leader</li>
+</ul>
+<h4 id="basic-structures">Basic Structures<a hidden class="anchor" aria-hidden="true" href="#basic-structures">#</a></h4>
+<p>At first, you may not know where to start. First, write a part of the framework according to the hints given in the course document.</p>
+<blockquote>
+<p>Add any state you need to the Raft struct in raft.go. You&rsquo;ll also need to define a struct to hold information about each log entry. Your code should follow Figure 2 in the paper as closely as possible.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">type</span> Log <span style="color:#fff;font-weight:bold">struct</span> {
+    Command <span style="color:#fff;font-weight:bold">interface</span>{}
+    Term    <span style="color:#fff;font-weight:bold">int32</span>
+}
+<span style="color:#007f7f">//
+</span><span style="color:#007f7f">// A Go object implementing a single Raft peer.
+</span><span style="color:#007f7f">//
+</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">type</span> Raft <span style="color:#fff;font-weight:bold">struct</span> {
+    mu        sync.Mutex          <span style="color:#007f7f">// Lock to protect shared access to this peer&#39;s state
+</span><span style="color:#007f7f"></span>    peers     []*labrpc.ClientEnd <span style="color:#007f7f">// RPC end points of all peers
+</span><span style="color:#007f7f"></span>    persister *Persister          <span style="color:#007f7f">// Object to hold this peer&#39;s persisted state
+</span><span style="color:#007f7f"></span>    me        <span style="color:#fff;font-weight:bold">int</span>                 <span style="color:#007f7f">// this peer&#39;s index into peers[]
+</span><span style="color:#007f7f"></span>
+    <span style="color:#007f7f">// counts    int
+</span><span style="color:#007f7f"></span>
+    <span style="color:#007f7f">// Your data here (2A, 2B, 2C).
+</span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// Look at the paper&#39;s Figure 2 for a description of what
+</span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// state a Raft server must maintain.
+</span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// Persistent state on all servers
+</span><span style="color:#007f7f"></span>    logs         []Log
+    votedFor     <span style="color:#fff;font-weight:bold">int</span>
+    currentTerm  <span style="color:#fff;font-weight:bold">int32</span>
+    <span style="color:#007f7f">// State
+</span><span style="color:#007f7f"></span>    state        <span style="color:#fff;font-weight:bold">int32</span>
+    <span style="color:#007f7f">// Volatile state on all server
+</span><span style="color:#007f7f"></span>    commitIndex  <span style="color:#fff;font-weight:bold">int</span>
+    lastApplied  <span style="color:#fff;font-weight:bold">int</span>
+
+    VoteGrantedCount  <span style="color:#fff;font-weight:bold">int</span>
+    <span style="color:#007f7f">// Volatile state on leaders
+</span><span style="color:#007f7f"></span>    nextIndex[]  <span style="color:#fff;font-weight:bold">int</span>
+    matchIndex[] <span style="color:#fff;font-weight:bold">int</span>
+
+    <span style="color:#007f7f">// timer
+</span><span style="color:#007f7f"></span>    electionTimer *time.Timer
+    voteCh     <span style="color:#fff;font-weight:bold">chan</span> <span style="color:#fff;font-weight:bold">struct</span>{}
+}
+</code></pre></div><blockquote>
+<p>Fill in the RequestVoteArgs and RequestVoteReply structs.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">type</span> RequestVoteArgs <span style="color:#fff;font-weight:bold">struct</span> {
+    <span style="color:#007f7f">// Your data here (2A, 2B).
+</span><span style="color:#007f7f"></span>    Term         <span style="color:#fff;font-weight:bold">int</span>
+    CandidateId  <span style="color:#fff;font-weight:bold">int</span>
+    LastLogIndex <span style="color:#fff;font-weight:bold">int</span>
+    LastLogTerm  <span style="color:#fff;font-weight:bold">int</span>
+}
+<span style="color:#007f7f">// field names must start with capital letters!
+</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">type</span> RequestVoteReply <span style="color:#fff;font-weight:bold">struct</span> {
+    <span style="color:#007f7f">// Your data here (2A).
+</span><span style="color:#007f7f"></span>    Term         <span style="color:#fff;font-weight:bold">int</span>
+    VoteGranted  <span style="color:#fff;font-weight:bold">bool</span>
+}
+</code></pre></div><blockquote>
+<p>Modify Make() to create a background goroutine that will kick off leader election periodically by sending out RequestVote RPCs when it hasn&rsquo;t heard from another peer for a while.</p>
+</blockquote>
+<p>The preparation of Make is very important, it is actually the initialization process of Raft. Finally, the loop of the state machine is started.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">func</span> Make(peers []*labrpc.ClientEnd, me <span style="color:#fff;font-weight:bold">int</span>,
+    persister *Persister, applyCh <span style="color:#fff;font-weight:bold">chan</span> ApplyMsg) *Raft {
+    rf := &amp;Raft{}
+    rf.peers = peers
+    rf.persister = persister
+    rf.me = me
+    <span style="color:#007f7f">// Your initialization code here (2A, 2B, 2C).
+</span><span style="color:#007f7f"></span>    rf.currentTerm = <span style="color:#ff0;font-weight:bold">0</span>;
+    rf.votedFor = -<span style="color:#ff0;font-weight:bold">1</span>;
+    rf.VoteGrantedCount = <span style="color:#ff0;font-weight:bold">0</span>;
+    rf.logs = <span style="color:#fff;font-weight:bold">make</span>([]Log, <span style="color:#ff0;font-weight:bold">0</span>)
+
+    rf.commitIndex = -<span style="color:#ff0;font-weight:bold">1</span>
+    rf.lastApplied = -<span style="color:#ff0;font-weight:bold">1</span>
+    rf.state = FOLLOWER
+    rf.nextIndex = <span style="color:#fff;font-weight:bold">make</span>([]<span style="color:#fff;font-weight:bold">int</span>, <span style="color:#fff;font-weight:bold">len</span>(rf.peers))
+    rf.matchIndex = <span style="color:#fff;font-weight:bold">make</span>([]<span style="color:#fff;font-weight:bold">int</span>, <span style="color:#fff;font-weight:bold">len</span>(rf.peers))
+    <span style="color:#007f7f">// initialize from state persisted before a crash
+</span><span style="color:#007f7f"></span>    rf.readPersist(persister.ReadRaftState())
+    <span style="color:#fff;font-weight:bold">go</span> rf.raftLoop()
+    <span style="color:#fff;font-weight:bold">return</span> rf
+}
+</code></pre></div><blockquote>
+<p>This way a peer will learn who is the leader, if there is already a leader, or become the leader itself. Implement the RequestVote() RPC handler so that servers will vote for one another.</p>
+</blockquote>
+<p>Implementation func <code>(rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply)</code>, as explained in the RequestVote RPC part of the paper, Recever implememtation, is transformed into the following code:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">func</span> (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
+    <span style="color:#007f7f">// Your code here (2A, 2B).
+</span><span style="color:#007f7f"></span>    rf.mu.Lock()
+    <span style="color:#fff;font-weight:bold">defer</span> rf.mu.Unlock()
+    <span style="color:#fff;font-weight:bold">if</span> args.Term &lt; rf.currentTerm {
+        reply.VoteGranted = <span style="color:#fff;font-weight:bold">false</span>
+
+    } <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span> args.Term == rf.currentTerm {
+        <span style="color:#fff;font-weight:bold">if</span> (rf.votedFor == -<span style="color:#ff0;font-weight:bold">1</span> ||  rf.votedFor == args.CandidateId)  &amp;&amp; args.LastLogIndex &gt;= <span style="color:#fff;font-weight:bold">len</span>(rf.logs){
+            <span style="color:#007f7f">// Only when the node does not vote for the candidate or only for the current candidate, the vote is successful. Ensure that a node votes twice
+</span><span style="color:#007f7f"></span>            reply.VoteGranted = <span style="color:#fff;font-weight:bold">true</span>
+            rf.votedFor = args.CandidateId;
+            fmt.Printf(<span style="color:#0ff;font-weight:bold">&#34;Server %d voted for Server %d\n&#34;</span>, rf.me, args.CandidateId)
+            <span style="color:#007f7f">// rf.resetTimer()
+</span><span style="color:#007f7f"></span>        } <span style="color:#fff;font-weight:bold">else</span> {
+            reply.VoteGranted = <span style="color:#fff;font-weight:bold">false</span>
+        }
+    } <span style="color:#fff;font-weight:bold">else</span> {
+        <span style="color:#007f7f">// currentTerm is smaller than the candidate
+</span><span style="color:#007f7f"></span>        rf.switchTo(FOLLOWER)
+        rf.currentTerm = args.Term
+        rf.votedFor = args.CandidateId
+        reply.VoteGranted = <span style="color:#fff;font-weight:bold">true</span>
+    }
+    reply.Term = rf.currentTerm
+    <span style="color:#fff;font-weight:bold">if</span> reply.VoteGranted == <span style="color:#fff;font-weight:bold">true</span> {
+        <span style="color:#fff;font-weight:bold">go</span> <span style="color:#fff;font-weight:bold">func</span>() { rf.voteCh &lt;- <span style="color:#fff;font-weight:bold">struct</span>{}{} }()
+    }
+
+}
+</code></pre></div><blockquote>
+<p>To implement heartbeats, define an AppendEntries RPC struct (though you may not need all the arguments yet), and have the leader send them out periodically.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">type</span> AppendEntryArgs <span style="color:#fff;font-weight:bold">struct</span> {
+    term         <span style="color:#fff;font-weight:bold">int</span>  <span style="color:#007f7f">// leader&#39;s term
+</span><span style="color:#007f7f"></span>    leaderId     <span style="color:#fff;font-weight:bold">int</span>  <span style="color:#007f7f">// so follower can redirect clients
+</span><span style="color:#007f7f"></span>    prevLogIndex <span style="color:#fff;font-weight:bold">int</span>  <span style="color:#007f7f">// index of log entry immediately preceding new ones
+</span><span style="color:#007f7f"></span>    prevLogTerm  <span style="color:#fff;font-weight:bold">int</span>  <span style="color:#007f7f">// term of prevLogIndex entry
+</span><span style="color:#007f7f"></span>    entries      []Log  <span style="color:#007f7f">// (empty for heartbeat; may send more than one for efficiency)
+</span><span style="color:#007f7f"></span>    leaderCommit <span style="color:#fff;font-weight:bold">int</span>    <span style="color:#007f7f">// leader&#39;s commitIndex
+</span><span style="color:#007f7f"></span>}
+<span style="color:#fff;font-weight:bold">type</span> AppendEntryReply <span style="color:#fff;font-weight:bold">struct</span> {
+    term    <span style="color:#fff;font-weight:bold">int</span>     <span style="color:#007f7f">// currentTerm, for leader to update itself
+</span><span style="color:#007f7f"></span>    success <span style="color:#fff;font-weight:bold">bool</span>    <span style="color:#007f7f">// true if follwer contained entry matching prevLogTerm and prevLogIndex
+</span><span style="color:#007f7f"></span>}
+
+<span style="color:#fff;font-weight:bold">func</span> (rf *Raft)sendAppendEntries(server <span style="color:#fff;font-weight:bold">int</span> , args *AppendEntryArgs, reply *AppendEntryReply) {
+    ok := rf.peers[server].Call(<span style="color:#0ff;font-weight:bold">&#34;Raft.AppendEntries&#34;</span>, args, reply)
+    <span style="color:#fff;font-weight:bold">return</span> ok
+}
+</code></pre></div><blockquote>
+<p>Make sure the election timeouts in different peers don&rsquo;t always fire at the same time, or else all peers will vote only for themselves and no one will become the leader.
+In RequestVotefunction, we added a judgment: only if this node did not vote for any candidate or ballot to the current candidates, this is the ticket to success. Ensure that a node votes twice</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">if</span> (rf.votedFor == -<span style="color:#ff0;font-weight:bold">1</span> ||  rf.voteFor == args.CandidateId)  &amp;&amp; args.LastLogIndex &gt;= <span style="color:#fff;font-weight:bold">len</span>(rf.logs){
+  reply.VoteGranted = <span style="color:#fff;font-weight:bold">true</span>
+  rf.votedFor = args.CandidateId;
+}
+</code></pre></div><h3 id="function-implementation">Function implementation<a hidden class="anchor" aria-hidden="true" href="#function-implementation">#</a></h3>
+<ol>
+<li>First realize the atomic operations of state acquisition, GetTerm and state judgment. The conffollowing functions are also used when checking in (if you run the test error, you need to check whether the function is implemented).</li>
+</ol>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007f7f">// atomic operations
+</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">func</span> (rf *Raft) getTerm() <span style="color:#fff;font-weight:bold">int32</span> {
+    <span style="color:#fff;font-weight:bold">return</span> atomic.LoadInt32(&amp;rf.currentTerm)
+}
+
+<span style="color:#fff;font-weight:bold">func</span> (rf *Raft) isState(state <span style="color:#fff;font-weight:bold">int32</span>) <span style="color:#fff;font-weight:bold">bool</span> {
+    <span style="color:#fff;font-weight:bold">return</span> atomic.LoadInt32(&amp;rf.state) == state
+}
+<span style="color:#007f7f">// return currentTerm and whether this server
+</span><span style="color:#007f7f">// believes it is the leader.
+</span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">func</span> (rf *Raft) GetState() (<span style="color:#fff;font-weight:bold">int</span>, <span style="color:#fff;font-weight:bold">bool</span>) {
+    <span style="color:#fff;font-weight:bold">var</span> term <span style="color:#fff;font-weight:bold">int</span>
+    <span style="color:#fff;font-weight:bold">var</span> isleader <span style="color:#fff;font-weight:bold">bool</span>
+    <span style="color:#007f7f">// Your code here (2A).
+</span><span style="color:#007f7f"></span>    term = <span style="color:#fff;font-weight:bold">int</span>(rf.getTerm())
+    isleader = rf.isState(LEADER)
+    <span style="color:#fff;font-weight:bold">return</span> term, isleader
+}
+</code></pre></div><p>Realize the reply of request to vote, handle request and handle request to vote.</p>
+<ul>
+<li><code>func (rf *Raft) broadcastVoteReq()</code></li>
+<li><code>func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply)</code></li>
+<li><code>func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool</code></li>
+</ul>
+<p>Realize request to add Log item, handle append request and handle request append reply. The implementation of PartA only stays at using AppendEntries to maintain the existence of the Leader, and does not actually change the Log.</p>
+<ul>
+<li><code>func (rf *Raft) sendAppendEntries(server int , args *AppendEntryArgs, reply *AppendEntryReply) bool</code></li>
+<li><code>func (rf *Raft) broadcastAppendEntries()</code></li>
+<li><code>func (rf *Raft) AppendEntries(args *AppendEntryArgs, reply *AppendEntryReply)</code></li>
+</ul>
+<p>To achieve randomness, Golang&rsquo;s timer + rand is enough. The following two functions implement random time generation and Timer reset.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">func</span> randElectionDuration() time.Duration {
+    r := rand.New(rand.NewSource(time.Now().UnixNano()))
+    <span style="color:#fff;font-weight:bold">return</span> time.Millisecond * time.Duration(r.Int63n(ELEC_TIME_MAX-ELEC_TIME_MIN) + ELEC_TIME_MIN)
+}
+
+<span style="color:#fff;font-weight:bold">func</span> (rf *Raft) resetTimer() {
+    newTimeout := randElectionDuration()
+    rf.electionTimer.Reset(newTimeout)
+}
+</code></pre></div><p>The last and most important function is the switching logic between Raft&rsquo;s states, which is Raft&rsquo;s main loop.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">func</span> (rf *Raft) raftLoop() {
+    rf.electionTimer = time.NewTimer(randElectionDuration())
+    <span style="color:#fff;font-weight:bold">for</span> {
+        <span style="color:#fff;font-weight:bold">switch</span> atomic.LoadInt32(&amp;rf.state) {
+            <span style="color:#fff;font-weight:bold">case</span> FOLLOWER:
+                <span style="color:#fff;font-weight:bold">select</span> {
+                <span style="color:#fff;font-weight:bold">case</span>  &lt;-rf.voteCh:
+                    rf.resetTimer()
+
+                <span style="color:#fff;font-weight:bold">case</span> &lt;- rf.electionTimer.C:
+                    rf.mu.Lock()
+                    rf.switchTo(CANDIDATE)
+                    rf.startElection()
+                    rf.mu.Unlock()
+                }
+            <span style="color:#fff;font-weight:bold">case</span> CANDIDATE:
+                rf.mu.Lock()
+                <span style="color:#fff;font-weight:bold">select</span> {
+
+                <span style="color:#fff;font-weight:bold">case</span> &lt;-rf.electionTimer.C:
+                    rf.resetTimer()
+                    <span style="color:#007f7f">// election time out ， what we should do? do it again
+</span><span style="color:#007f7f"></span>                    rf.startElection()
+                <span style="color:#fff;font-weight:bold">default</span>:
+                    <span style="color:#007f7f">// check if it has collected enough vote
+</span><span style="color:#007f7f"></span>                    <span style="color:#fff;font-weight:bold">if</span> rf.VoteGrantedCount &gt; <span style="color:#fff;font-weight:bold">len</span>(rf.peers)/<span style="color:#ff0;font-weight:bold">2</span> {
+                        rf.switchTo(LEADER)
+                    }
+                }
+                rf.mu.Unlock()
+            <span style="color:#fff;font-weight:bold">case</span> LEADER:
+                rf.broadcastAppendEntries()
+                time.Sleep(HEART_BEAT)
+
+        }
+    }
+}
+</code></pre></div><h2 id="part-iii-fault-tolerant-keyvalue-storage-service">Part III: Fault-tolerant key/value storage service<a hidden class="anchor" aria-hidden="true" href="#part-iii-fault-tolerant-keyvalue-storage-service">#</a></h2>
+<p>This experiment is the third experiment of the course. It completes a key-value system based on the raft protocol.</p>
+<p>The service must support 3 operations</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Put ( key , value ) : change the value of key
+Append ( key , arg ) : add value to the value of key
+Get ( key ) : return value
+</code></pre></div><blockquote>
+<p>When packet loss is not performed and the case of realizing servers fail, it is necessary to provide the client sequential consistency of api, call Put, Append a Get3 and api, performed in the same order in all the server, and having at-most-once the A suggested plan for semantics is: first complete server.gothe Opstructure in progress , and then complete server.gothe PutAppend()sum Get()operation. In operation, it should be called first Start(), and when the log commits, reply to the client</p>
+</blockquote>
+<ul>
+<li>After the call Start(), kvraft servers will wait for the raft log to reach an agreement. By applyChobtaining consistent commands, we need to consider how to arrange the code so that it can be read continuously applyCh, and other commands can also be executed.</li>
+<li>We need to deal with the case: the leader is called Start(), but leadership is lost before log commit. In this case, the code should resend the request to the new leader. One way is that the server needs to detect that it is no longer the leader, and returns an unused request on the index by checking the same start. The other way is by calling GetState(), but if there is a network partition, it may not know that it is no longer the leader. In this case, both the client and server are in the network partition, so they can wait indefinitely until the network is restored</li>
+<li>A kvraft server should not complete the Get()operation if it cannot get the majority, because it may not get the latest data.</li>
+</ul>
+<p>Need to request a number for each client
+To ensure that the memory is released quickly, so the next request can be brought with the next request</p>
+<p>Current problem: leader changes frequently:</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">func</span>  (ck * Clerk)  Get(key <span style="color:#fff;font-weight:bold">string</span>) <span style="color:#fff;font-weight:bold">string</span> {
+   args := GetArgs { Key : key }
+
+   <span style="color:#fff;font-weight:bold">for</span>  {
+      <span style="color:#fff;font-weight:bold">for</span> _ , c := <span style="color:#fff;font-weight:bold">range</span> ck . servers {
+         time . Sleep ( time . Millisecond * <span style="color:#ff0;font-weight:bold">1000</span>)
+         reply := GetReply { }
+         ok := c . Call (<span style="color:#0ff;font-weight:bold">&#34;RaftKV.Get&#34;</span> ,  &amp;args ,  &amp;reply)
+         <span style="color:#fff;font-weight:bold">if</span> ok &amp;&amp; !reply.WrongLeader {
+            <span style="color:#fff;font-weight:bold">return</span> reply.Value
+         }
+      }
+   }
+
+   <span style="color:#fff;font-weight:bold">return</span>  <span style="color:#0ff;font-weight:bold">&#34;&#34;</span>
+}
+</code></pre></div><p>If there is no sleep here, it is equivalent to that the client is constantly in START. The problem is that the server is constantly processing the START command, causing the normal heartbeat to be unable to complete, and frequent changes to the leader occur. The problem is very serious. Seriously, what should I do?
+Later, optimization was made. For read operations, chan is not used, which is not a problem.</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">index :=  -<span style="color:#ff0;font-weight:bold">1</span>
+Term :=  -<span style="color:#ff0;font-weight:bold">1</span>
+
+isLeader :=  <span style="color:#fff;font-weight:bold">true</span>
+
+<span style="color:#fff;font-weight:bold">if</span> rf . state != StateLeader {
+   isLeader =  <span style="color:#fff;font-weight:bold">false</span>
+   <span style="color:#fff;font-weight:bold">return</span> index , term , isLeader
+}
+</code></pre></div><p>Give each client a number, and then each request grows sequentially</p>
+<div class="highlight"><pre style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#fff;font-weight:bold">select</span> {
+
+<span style="color:#fff;font-weight:bold">case</span> op := &lt;-ch:
+   commited := op == entry
+   kv.logger.Debug(<span style="color:#0ff;font-weight:bold">&#34;index:%d commited:%v&#34;</span>, index, commited)
+
+   <span style="color:#fff;font-weight:bold">return</span> commited
+
+   <span style="color:#007f7f">// The timeout here is actually very easy to understand, because it was the leader at the beginning, but before the log got the commit, the leadership was lost. At this time
+</span><span style="color:#007f7f"></span>   <span style="color:#007f7f">// If there is no timeout mechanism, it will block forever
+</span><span style="color:#007f7f"></span>   <span style="color:#007f7f">// Or because the leader at this time is the leader in a partition, it can only be blocked forever
+</span><span style="color:#007f7f"></span>   <span style="color:#007f7f">// So also need timeout
+</span><span style="color:#007f7f"></span>
+<span style="color:#fff;font-weight:bold">case</span> &lt;-time.After(AppendTimeOut):
+   <span style="color:#007f7f">//kv.logger.Info(&#34;index:%d %s timeout after %v&#34;, index, entry.Type, AppendTimeOut)
+</span><span style="color:#007f7f"></span>   <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>
+}
+</code></pre></div><h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://github.com/0x7b1/systems-design/tree/master/project/6.824">Source code</a></li>
 </ul>
 
 </div>
   <footer class="post-footer">
-    <div class="post-meta">Sep 2, 2020
-
-    </div>
     
   </footer>
 </article>

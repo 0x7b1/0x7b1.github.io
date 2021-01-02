@@ -16,12 +16,12 @@
     </item>
     
     <item>
-      <title>MIT&#39;s 6.824 Distributed System Project course</title>
+      <title>MIT&#39;s 6.824 Distributed System Course</title>
       <link>https://0x7b1.github.io/projects/mit-6.824-project/</link>
       <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://0x7b1.github.io/projects/mit-6.824-project/</guid>
-      <description>Read academic papers of distributed and data systems and implementation of the Raft consensus algorithm in Go.</description>
+      <description>This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service.</description>
     </item>
     
     <item>
@@ -66,7 +66,7 @@
       <pubDate>Wed, 06 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://0x7b1.github.io/projects/osbox/</guid>
-      <description>OSBox is the solution for managing the software stack in any operating system. It automatically synchronizes, manages dependencies and configuration files.</description>
+      <description>OSBox automatically synchronizes, manages dependencies and configuration files in any operating system.</description>
     </item>
     
     <item>
@@ -75,7 +75,7 @@
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>https://0x7b1.github.io/projects/wpcalypso/</guid>
-      <description>Implementation, refactoring and fixing features of the new React-based admin of Wordpress.</description>
+      <description>Contribution to the JavaScript and API powered WordPress.com</description>
     </item>
     
     <item>

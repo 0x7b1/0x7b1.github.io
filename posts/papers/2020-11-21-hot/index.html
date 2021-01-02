@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Paper review: HOT Radix Tree | Carlos Ramos</title>
+
+<meta name="keywords" content="" />
+<meta name="description" content="HOT is a efficient radix tree that uses a general purpose index structure for main-memory database systems or string intensive applications.">
+<meta name="author" content="jc">
+<link rel="canonical" href="https://0x7b1.github.io/posts/papers/2020-11-21-hot/" />
+<link href="https://0x7b1.github.io/assets/css/stylesheet.min.230f6190ea43f5d9c3df590f4988e1b8f3d7c39515e9a6a16be1b4dad05bb917.css" integrity="sha256-Iw9hkOpD9dnD31kPSYjhuPPXw5UV6aaha&#43;G02tBbuRc=" rel="preload stylesheet"
+    as="style">
+
+<link rel="icon" href="https://0x7b1.github.io/site/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://0x7b1.github.io/site/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://0x7b1.github.io/site/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://0x7b1.github.io/site/apple-touch-icon.png">
+<link rel="mask-icon" href="https://0x7b1.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.79.1" />
+
+
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;700&display=swap" rel="stylesheet">
+<meta property="og:title" content="Paper review: HOT Radix Tree" />
+<meta property="og:description" content="HOT is a efficient radix tree that uses a general purpose index structure for main-memory database systems or string intensive applications." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://0x7b1.github.io/posts/papers/2020-11-21-hot/" />
+<meta property="article:published_time" content="2020-11-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-21T00:00:00+00:00" /><meta property="og:see_also" content="https://0x7b1.github.io/posts/papers/2020-12-10-artful/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Paper review: HOT Radix Tree"/>
+<meta name="twitter:description" content="HOT is a efficient radix tree that uses a general purpose index structure for main-memory database systems or string intensive applications."/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Paper review: HOT Radix Tree",
+  "name": "Paper review: HOT Radix Tree",
+  "description": "HOT is a efficient radix tree that uses a general purpose index structure for main-memory database systems or string intensive applications.",
+  "keywords": [
+    
+  ],
+  "articleBody": "This paper introduces HOT, a trie index structure that enables efficient search and insert operations using modern processor instructions by being space efficient and linear scalable. The basic idea is to dynamically vary the number of bits considered at each node and enable high fanout and low tree height. The major difference between this and radix tree variants is its variable size for each node. HOT outperforms state of the art index structures in terms of search performance and memory footprint. These prevalent differences makes it appealing to be used as a general purpose index structure for main-memory database systems or string intensive applications.\nIntroduction Memory database systems depend on fast index structures. For this reason, it is required to be space efficient and responsive. One advantage of using tries, compared to hash tables, is its order-preserving property. ART achieves high fanout and high performance on integers but its average fanout is lower when indexing strings. This is caused by sparse key distributions prevalence in string keys. HOT is a space-optimized and performant index structure that dynamically evolves and efficiently support operations. It uses an adaptive number of bits (also known as span) per nodes depending on the data distribution to achieve a high average fanout. In this way, the sparsity problem and space consumption are reduced. HOT also provides a careful design to leverage the power of modern CPU instructions by making intensive use of SIMD parallel operations. For the benchmark, HOT is compared against state-of-the-art index structures showing outstanding results.\nBackground Trie is a tree structure where all descendants of a node share a common prefix. The major drawbacks of tries are the large heights. Patricia trees omit nodes with only one child, the result is a full binary tree. This reduces the height but the fanout remains small, and therefore still yields large tree heights. In order to reduce the height, one technique is to increment the size of the span s and make each node to store (2^s) pointers. Large spans are space consuming but they can be reduced by dynamically adapting the node structure, like ART does by using a compact representation of the store instead of a fixed array of 256 pointers. Having a span of 8 bits results in sparsity of distributed keys in many nodes with very low fanout. Using adaptive nodes reduces the memory consumption in sparsely distributed data, but does not address the problem of a balanced fanout and height of the tree. The idea is to reduce the height of the tree and increase the average node fanout. HOT builds upon these previous ideas to propose a binary Patricia trie with compound nodes by having a maximum node fanout and an optimized resulting height. Previous work has proposed hybrid data structures but they perform concisely only on specific workloads.\n  Figure 1. Different implementations of a Trie, and HOT   Implementation As mentioned, the most important optimization is to increase the span of each compound node. We can observe in the Figure 1 how the span and fanout varies across different impementations of a trie. The problem lies on sparsely-distributed keys that usually string values cause when using a trie with fixed size of span. HOT proposes to set the size of the span per node depending on the data distribution by targeting a maximum fanout k. In HOT, every compound node represents a binary Patricia trie with a fanout up to k, with n keys and n − 1 inner nodes. This means at most k − 1 binary inner nodes. Given a k of fanout the idea is to minimize the overall tree height associated with h(n), which yields the maximum height of its compound child nodes. The minimization of the height of the tree is analogous to partitioning a full binary tree. This idea preserves the height optimization while new data is inserted. A (compound) node contains up to k − 1 patricia trie nodes and k leaf entries.\nOrganization   Figure 2. Binary encoding using a sequential layout   HOT does not organize nodes in a pointer-based trie structure, instead uses a compact representation that allows it to be space-efficient and fast, as it is shown if the Figure 2. The idea is to linearize a trie bit string in order to allow parallel searching using SIMD instructions. The first dimension of the node is the size of the partial keys, and the second is the representation of the bit positions. These representations are meant to be optimized by modern processor instruction sets. Each node layout consists of header, bit positions, partial keys, and values. The lookup operation traverses the tree until a leaf node containing a tuple identifier is encountered. The insertion operation uses a sparse partial key for inner nodes. First, a search operation is issued to check its existence, and then an intricate operation to flip bites using SIMD is done in order to insert new bit positions. This operation is further improved by encoding the least-significant bits and overlapping operations.\nScalability Scalability is important for an index structure, for this a synchronization protocol is used in order to provide efficient concurrent index access. Traditional locking tech-iques don’t scale. Lock-free index structures or write-only minimal locks. For synchronizing HOT, the protocol takes care of the insert and delete operations. One important aspect of the synchronization is making the nodes obsolete instead of claiming directly to memory, this allows concurrent writes and reads with no locking.\nEvaluation For the benchmarking, there are 5 workloads that test operations according to different proportions by using four different datasets consisting of string data. HOT is compared against state of the art index structures: ART, MassTree, BT. The benchmark evaluates performance, memory consumption scalability and tree height.\n Performance: HOT is better on many of the workload scenarios. It is also consistent across different dataset shapes, which makes it appealing for a general purpose index structure. Memory consumption: The evaluation measures the space required to store nodes, and key identifiers. HOT is the most space-efficient data structure, and also the one that has less memory footprint. Scalability: The workload executes insert and lookup operations to measure the throughput of operations. HOT features a linear scalability mainly due to the employed synchronization protocol. Tree height: An analysis of the depth distribution for all data sets shows that HOT is able to reduce the mean depth significantly in contrast with the other trie structures.  Conclusion HOT is a novel index data structure that improves traditional tries by tackling the problem of speed and sparsity. This enables instant lookup and fast insert operations, which is one of the requirements of Database Systems.\nLinks  HOT: A Height Optimized Trie Index for Main-Memory Database Systems  ",
+  "wordCount" : "1118",
+  "inLanguage": "en",
+  "datePublished": "2020-11-21T00:00:00Z",
+  "dateModified": "2020-11-21T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "jc"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://0x7b1.github.io/posts/papers/2020-11-21-hot/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Carlos Ramos",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://0x7b1.github.io/site/favicon.ico"
+    }
+  }
+}
+</script>
+
+
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+<noscript>
+    <style type="text/css">
+        .theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <span class="logo-switches">
+            </span>
+        </div>
+        <ul class="menu" id="menu" onscroll="menu_on_scroll()">
+              <li>
+                  <a href="https://0x7b1.github.io/" title="Home">
+                      <span>Home</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://0x7b1.github.io/series/blog" title="Blog">
+                      <span>Blog</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://0x7b1.github.io/series/projects" title="Projects">
+                      <span>Projects</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://0x7b1.github.io/about" title="About">
+                      <span>About</span>
+                  </a>
+              </li>
+            <li class="theme-toggle" title="(Alt + T)">
+              <a id="theme-toggle" accesskey="t">
+              <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-left">
+                <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+                <circle cx="8" cy="12" r="3"></circle>
+              </svg>
+              <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-toggle-right">
+                <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+                <circle cx="16" cy="12" r="3"></circle>
+              </svg>
+              </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+    <main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">
+      Paper review: HOT Radix Tree
+    </h1>
+    <div class="post-meta">Nov 21, 2020
+
+    </div>
+  </header>
+  
+  <div class="post-content">
+<p>This paper introduces HOT, a trie index structure that enables efficient search and insert operations using modern processor instructions by being space efficient and linear scalable.
+The basic idea is to dynamically vary the number of bits considered at each node and enable high fanout and low tree height.
+The major difference between this and radix tree variants is its variable size for each node.
+HOT outperforms state of the art index structures in terms of search performance and memory footprint.
+These prevalent differences makes it appealing to be used as a general purpose index structure for main-memory database systems or string intensive applications.</p>
+<h2 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h2>
+<p>Memory database systems depend on fast index structures.
+For this reason, it is required to be space efficient and responsive.
+One advantage of using tries, compared to hash tables, is its order-preserving property.
+ART achieves high fanout and high performance on integers but its average fanout is lower when indexing strings.
+This is caused by sparse key distributions prevalence in string keys.
+HOT is a space-optimized and performant index structure that dynamically evolves and efficiently support operations.
+It uses an adaptive number of bits (also known as <em>span</em>) per nodes depending on the data distribution to achieve a high average fanout.
+In this way, the sparsity problem and space consumption are reduced.
+HOT also provides a careful design to leverage the power of modern CPU instructions by making intensive use of SIMD parallel operations.
+For the benchmark, HOT is compared against state-of-the-art index structures showing outstanding results.</p>
+<h2 id="background">Background<a hidden class="anchor" aria-hidden="true" href="#background">#</a></h2>
+<p>Trie is a tree structure where all descendants of a node share a common prefix.
+The major drawbacks of tries are the large heights.
+Patricia trees omit nodes with only one child, the result is a full binary tree.
+This reduces the height but the fanout remains small, and therefore still yields large tree heights.
+In order to reduce the height, one technique is to increment the size of the span <em>s</em> and make each node to store (2^s) pointers.
+Large spans are space consuming but they can be reduced by dynamically adapting the node structure, like ART does by using a compact representation of the store instead of a fixed array of 256 pointers.
+Having a span of 8 bits results in sparsity of distributed keys in many nodes with very low fanout.
+Using adaptive nodes reduces the memory consumption in sparsely distributed data, but does not address the problem of a balanced fanout and height of the tree.
+The idea is to reduce the height of the tree and increase the average node fanout.
+HOT builds upon these previous ideas to propose a binary Patricia trie with compound nodes by having a maximum node fanout and an optimized resulting height.
+Previous work has proposed hybrid data structures but they perform concisely only on specific workloads.</p>
+<figure>
+    <img src="images/1-trees.jpg#center" width="70%"/> <figcaption>
+            Figure 1. Different implementations of a Trie, and HOT
+        </figcaption>
+</figure>
+
+<h3 id="implementation">Implementation<a hidden class="anchor" aria-hidden="true" href="#implementation">#</a></h3>
+<p>As mentioned, the most important optimization is to increase the span of each compound node.
+We can observe in the Figure 1 how the span and fanout varies across different impementations of a trie.
+The problem lies on sparsely-distributed keys that usually string values cause when using a trie with fixed size of span.
+HOT proposes to set the size of the span per node depending on the data distribution by targeting a maximum fanout <em>k</em>.
+In HOT, every compound node represents a binary Patricia trie with a fanout up to <em>k</em>, with <em>n</em> keys and <em>n − 1</em> inner nodes.
+This means at most <em>k − 1</em> binary inner nodes.
+Given a <em>k</em> of fanout the idea is to minimize the overall tree height associated with <em>h(n)</em>, which yields the maximum height of its compound child nodes.
+The minimization of the height of the tree is analogous to partitioning a full binary tree.
+This idea preserves the height optimization while new data is inserted.
+A (compound) node contains up to <em>k − 1</em> patricia trie nodes and <em>k</em> leaf entries.</p>
+<h3 id="organization">Organization<a hidden class="anchor" aria-hidden="true" href="#organization">#</a></h3>
+<figure>
+    <img src="images/2-binary.jpg#center" width="70%"/> <figcaption>
+            Figure 2. Binary encoding using a sequential layout
+        </figcaption>
+</figure>
+
+<p>HOT does not organize nodes in a pointer-based trie structure, instead uses a compact representation that allows it to be space-efficient and fast, as it is shown if the Figure 2.
+The idea is to linearize a trie bit string in order to allow parallel searching using SIMD instructions.
+The first dimension of the node is the size of the partial keys, and the second is the representation of the bit positions.
+These representations are meant to be optimized by modern processor instruction sets.
+Each node layout consists of header, bit positions, partial keys, and values.
+The lookup operation traverses the tree until a leaf node containing a tuple identifier is encountered.
+The insertion operation uses a sparse partial key for inner nodes.
+First, a search operation is issued to check its existence, and then an intricate operation to flip bites using SIMD is done in order to insert new bit positions.
+This operation is further improved by encoding the least-significant bits and overlapping operations.</p>
+<h3 id="scalability">Scalability<a hidden class="anchor" aria-hidden="true" href="#scalability">#</a></h3>
+<p>Scalability is important for an index structure, for this a synchronization protocol is used in order to provide efficient concurrent index access.
+Traditional locking tech-iques don’t scale.
+Lock-free index structures or write-only minimal locks.
+For synchronizing HOT, the protocol takes care of the insert and delete operations.
+One important aspect of the synchronization is making the nodes obsolete instead of claiming directly to memory, this allows concurrent writes and reads with no locking.</p>
+<h3 id="evaluation">Evaluation<a hidden class="anchor" aria-hidden="true" href="#evaluation">#</a></h3>
+<p>For the benchmarking, there are 5 workloads that test operations according to different proportions by using four different datasets consisting of string data.
+HOT is compared against state of the art index structures: ART, MassTree, BT.
+The benchmark evaluates performance, memory consumption scalability and tree height.</p>
+<ul>
+<li>Performance: HOT is better on many of the workload scenarios. It is also consistent across different dataset shapes, which makes it appealing for a general purpose index structure.</li>
+<li>Memory consumption: The evaluation measures the space required to store nodes, and key identifiers. HOT is the most space-efficient data structure, and also the one that has less memory footprint.</li>
+<li>Scalability: The workload executes insert and lookup operations to measure the throughput of operations. HOT features a linear scalability mainly due to the employed synchronization protocol.</li>
+<li>Tree height: An analysis of the depth distribution for all data sets shows that HOT is able to reduce the mean depth significantly in contrast with the other trie structures.</li>
+</ul>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>HOT is a novel index data structure that improves traditional tries by tackling the problem of speed and sparsity.
+This enables instant lookup and fast insert operations, which is one of the requirements of Database Systems.</p>
+<h2 id="links">Links<a hidden class="anchor" aria-hidden="true" href="#links">#</a></h2>
+<ul>
+<li><a href="https://15721.courses.cs.cmu.edu/spring2019/papers/08-oltpindexes2/p521-binna.pdf">HOT: A Height Optimized Trie Index for Main-Memory Database Systems</a></li>
+</ul>
+
+</div>
+  <footer class="post-footer">
+    
+  </footer>
+</article>
+    </main><footer class="footer">
+    <span>&copy; 2021 <a href="https://0x7b1.github.io/">Carlos Ramos</a></span>
+    
+    
+    <span>&middot;</span>
+    <span><a href="https://github.com/0x7b1" rel="noopener" target="_blank">Licenses</a></span>
+</footer>
+<a href="#top">
+    <button class="top-link" id="top-link" type="button" aria-label="go to top" title="Go to Top (Alt + G)"
+        accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+
+
+<script>
+    window.onload = function () {
+        if (localStorage.getItem("menu-scroll-position")) {
+            document.getElementById('menu').scrollLeft = localStorage.getItem("menu-scroll-position");
+        }
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                behavior: "smooth"
+            });
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.replaceState(null, null, `#${id}`);
+            }
+        });
+    });
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+    function menu_on_scroll() {
+        localStorage.setItem("menu-scroll-position", document.getElementById('menu').scrollLeft);
+    }
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+</body>
+
+</html>

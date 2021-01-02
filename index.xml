@@ -16,12 +16,30 @@
     </item>
     
     <item>
-      <title>MIT&#39;s 6.824 Distributed System Project course</title>
+      <title>Paper review: ARTful Indexing for Main-Memory Databases</title>
+      <link>https://0x7b1.github.io/posts/papers/2020-12-10-artful/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://0x7b1.github.io/posts/papers/2020-12-10-artful/</guid>
+      <description>By this and that</description>
+    </item>
+    
+    <item>
+      <title>Paper review: HOT Radix Tree</title>
+      <link>https://0x7b1.github.io/posts/papers/2020-11-21-hot/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://0x7b1.github.io/posts/papers/2020-11-21-hot/</guid>
+      <description>HOT is a efficient radix tree that uses a general purpose index structure for main-memory database systems or string intensive applications.</description>
+    </item>
+    
+    <item>
+      <title>MIT&#39;s 6.824 Distributed System Course</title>
       <link>https://0x7b1.github.io/projects/mit-6.824-project/</link>
       <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://0x7b1.github.io/projects/mit-6.824-project/</guid>
-      <description>Read academic papers of distributed and data systems and implementation of the Raft consensus algorithm in Go.</description>
+      <description>This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service.</description>
     </item>
     
     <item>
@@ -66,16 +84,7 @@
       <pubDate>Wed, 06 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://0x7b1.github.io/projects/osbox/</guid>
-      <description>OSBox is the solution for managing the software stack in any operating system. It automatically synchronizes, manages dependencies and configuration files.</description>
-    </item>
-    
-    <item>
-      <title>Interpolating in triange</title>
-      <link>https://0x7b1.github.io/posts/2018-07-22-triangle/</link>
-      <pubDate>Sun, 22 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://0x7b1.github.io/posts/2018-07-22-triangle/</guid>
-      <description>Have you ever wonder why barycentric coordinates are important? Take a look to this interactive explanation.</description>
+      <description>OSBox automatically synchronizes, manages dependencies and configuration files in any operating system.</description>
     </item>
     
     <item>
@@ -84,7 +93,7 @@
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>https://0x7b1.github.io/projects/wpcalypso/</guid>
-      <description>Implementation, refactoring and fixing features of the new React-based admin of Wordpress.</description>
+      <description>Contribution to the JavaScript and API powered WordPress.com</description>
     </item>
     
     <item>

@@ -1,4 +1,4 @@
-baseURL: "https://carlosr.me/"
+baseURL: "http://carlosr.me/"
 title: Carlos Ramos
 paginate: 8
 theme:

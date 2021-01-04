@@ -103,7 +103,7 @@ params:
   description: "jc - https://github.com/adityatelange/hugo-PaperMod"
   author: jc
   # author: ["Me", "You"] # multiple authors
-  ShowReadingTime: true
+  ShowReadingTime: false
   mainSections: ["projects", "posts"]
   defaultTheme: auto
   ShowShareButtons: false
@@ -143,8 +143,8 @@ params:
       url: "https://github.com/0x7b1"
     - name: twitter
       url: "http://twitter.com/_0x7b1"
-    - name: resume
-      url: "/resume.pdf"
+    - name: cv
+      url: "/docs/cv.pdf"
 
 markup:
   highlight:

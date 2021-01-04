@@ -6,7 +6,12 @@ date: "2020-12-31"
 series: ["blog"]
 ---
 
-<!-- ## Moments -->
-<!-- This year has been this and that and such tomsonete -->
+<!-- Highlight of the New stuff, experiences and discoveries made this year -->
 
-{{< gallery match="images/*" loadJQuery="true" sortOrder="desc" showExif="true" rowHeight="180" margins="5" resizeOptions="600x300 q90 Lanczos" previewType="blur" embedPreview="true" >}}
+## Music
+
+{{< gallery match="images/music/*" loadJQuery="true" lastRow="left" showExif="true" rowHeight="100" >}}
+
+## Moments
+
+{{< gallery match="images/moments/*" loadJQuery="true" sortOrder="desc" showExif="true" rowHeight="120" >}}

@@ -8,9 +8,9 @@ cover:
   image: "/covers/sparksql.jpg"
 ---
 
-This is projects aimed to systematically compare relevant RDF relational schemas, i.e., Single Statement Table, Property Tables or Vertically-Partitioned Tables queried using Apache Spark.
+This project aims to systematically compare relevant RDF relational schemas, i.e., Single Statement Table, Property Tables or Vertically-Partitioned Tables queried using Apache Spark.
 
-It is evaluated the performance Spark SQL querying engine for processing SPARQL queries using three different storage back-ends, namely, Postgres SQL, Hive, and HDFS. For the latter one, the experiment compares four different data formats (CSV, ORC, Avro, and Parquet). It uses a representative query workloads from the SP2Bench benchmark scenario.
+We evaluate the performance of the Spark SQL query engine for SPARQL queries using three different storage back-ends, namely, Postgres SQL, Hive, and HDFS. For the latter one, the experiment compares four different data formats (CSV, ORC, Avro, and Parquet). It uses a representative query workloads from the SP2Bench benchmark scenario.
 
 The results show interesting insights about the impact of the relational encoding scheme, storage backends and storage formats on the performance of the query execution process.
 You can visit more in the [project website](https://datasystemsgrouput.github.io/SPARKSQLRDFBenchmarking/).

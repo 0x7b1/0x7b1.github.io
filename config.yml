@@ -1,7 +1,9 @@
 baseURL: "https://0x7b1.github.io/"
 title: Carlos Ramos
 paginate: 8
-theme: dark
+theme:
+  - dark
+  - hugo-shortcode-gallery
 enableInlineShortcodes: true
 enableRobotsTXT: true
 

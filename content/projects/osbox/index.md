@@ -10,7 +10,7 @@ cover:
 
 OSBox automatically synchronizes, manages dependencies and configuration files in any operating system. The prototype can be tried [here](https://0x7b1.github.io/os-box/).
 
-{{< figure src="images/demo.jpg#center" title="Concept of OSBox in action" >}}
+{{< figure src="images/demo.png#center" >}}
 
 *NB. This is still an ongoing project*
 

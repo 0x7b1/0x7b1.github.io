@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://carlosr.me/sitemap.xml
+Sitemap: http://carlosr.me/sitemap.xml

@@ -2,97 +2,97 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>projects on Carlos Ramos</title>
-    <link>https://0x7b1.github.io/series/projects/</link>
+    <link>https://carlosr.me/series/projects/</link>
     <description>Recent content in projects on Carlos Ramos</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://0x7b1.github.io/series/projects/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://carlosr.me/series/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SparkSQL RDF Benchmarking</title>
-      <link>https://0x7b1.github.io/projects/spark-rdf/</link>
+      <link>https://carlosr.me/projects/spark-rdf/</link>
       <pubDate>Wed, 25 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/spark-rdf/</guid>
+      <guid>https://carlosr.me/projects/spark-rdf/</guid>
       <description>Systematic comparison of RDF relational schemas using Apache Spark.</description>
     </item>
     
     <item>
       <title>MIT&#39;s 6.824 Distributed System Course</title>
-      <link>https://0x7b1.github.io/projects/mit-6.824-project/</link>
+      <link>https://carlosr.me/projects/mit-6.824-project/</link>
       <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/mit-6.824-project/</guid>
+      <guid>https://carlosr.me/projects/mit-6.824-project/</guid>
       <description>This course project implements the Raft Consensus algoritm, Map Reduce, and a Fault-tolerant key/value storage service.</description>
     </item>
     
     <item>
       <title>Cellular Automata Fluid Simulation</title>
-      <link>https://0x7b1.github.io/projects/ca-fluid/</link>
+      <link>https://carlosr.me/projects/ca-fluid/</link>
       <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/ca-fluid/</guid>
+      <guid>https://carlosr.me/projects/ca-fluid/</guid>
       <description>Implementation of fluid/liquid dynamics using Cellular Automata in Rust with CPU/GPU benchmarking.</description>
     </item>
     
     <item>
       <title>Heatmap Alert</title>
-      <link>https://0x7b1.github.io/projects/heatmap-alert/</link>
+      <link>https://carlosr.me/projects/heatmap-alert/</link>
       <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/heatmap-alert/</guid>
+      <guid>https://carlosr.me/projects/heatmap-alert/</guid>
       <description>A tool for automating the structure, documentation and tracking of a new software project.</description>
     </item>
     
     <item>
       <title>Procedural Earthbending</title>
-      <link>https://0x7b1.github.io/projects/earthbending/</link>
+      <link>https://carlosr.me/projects/earthbending/</link>
       <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/earthbending/</guid>
+      <guid>https://carlosr.me/projects/earthbending/</guid>
       <description>A game that explores the mechanics of VR by implementing a clever algorithm for procedural earhbending.</description>
     </item>
     
     <item>
       <title>CO2 Emission Simulator</title>
-      <link>https://0x7b1.github.io/projects/co2-emulator/</link>
+      <link>https://carlosr.me/projects/co2-emulator/</link>
       <pubDate>Thu, 17 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/co2-emulator/</guid>
+      <guid>https://carlosr.me/projects/co2-emulator/</guid>
       <description>Given a simulated vahicle traffic on different cities, this app allows you to visualize the levels of CO2 emmited.and configuration files.</description>
     </item>
     
     <item>
       <title>OSBox</title>
-      <link>https://0x7b1.github.io/projects/osbox/</link>
+      <link>https://carlosr.me/projects/osbox/</link>
       <pubDate>Wed, 06 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/osbox/</guid>
+      <guid>https://carlosr.me/projects/osbox/</guid>
       <description>OSBox automatically synchronizes, manages dependencies and configuration files in any operating system.</description>
     </item>
     
     <item>
       <title>WordPress Calypso</title>
-      <link>https://0x7b1.github.io/projects/wpcalypso/</link>
+      <link>https://carlosr.me/projects/wpcalypso/</link>
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/wpcalypso/</guid>
+      <guid>https://carlosr.me/projects/wpcalypso/</guid>
       <description>Contribution to the JavaScript and API powered WordPress.com</description>
     </item>
     
     <item>
       <title>Genesis</title>
-      <link>https://0x7b1.github.io/projects/genesis/</link>
+      <link>https://carlosr.me/projects/genesis/</link>
       <pubDate>Thu, 22 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/genesis/</guid>
+      <guid>https://carlosr.me/projects/genesis/</guid>
       <description>A tool for automating the structure, documentation and tracking of a new software project.</description>
     </item>
     
     <item>
       <title>Dotfiles</title>
-      <link>https://0x7b1.github.io/projects/dotfiles/</link>
+      <link>https://carlosr.me/projects/dotfiles/</link>
       <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/projects/dotfiles/</guid>
+      <guid>https://carlosr.me/projects/dotfiles/</guid>
       <description>Actively maintained personal system configurations and automation scripts.</description>
     </item>
     

@@ -2,34 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Carlos Ramos</title>
-    <link>https://0x7b1.github.io/posts/</link>
+    <link>https://carlosr.me/posts/</link>
     <description>Recent content in Posts on Carlos Ramos</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 31 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://0x7b1.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://carlosr.me/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2020 in pictures</title>
-      <link>https://0x7b1.github.io/posts/misc/2020-12-31-2020-recap/</link>
+      <link>https://carlosr.me/posts/misc/2020-12-31-2020-recap/</link>
       <pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/posts/misc/2020-12-31-2020-recap/</guid>
+      <guid>https://carlosr.me/posts/misc/2020-12-31-2020-recap/</guid>
       <description>Highlight of experiences and discoveries made in 2020</description>
     </item>
     
     <item>
       <title>Paper review: ARTful Indexing for Main-Memory Databases</title>
-      <link>https://0x7b1.github.io/posts/papers/2020-12-10-artful/</link>
+      <link>https://carlosr.me/posts/papers/2020-12-10-artful/</link>
       <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/posts/papers/2020-12-10-artful/</guid>
+      <guid>https://carlosr.me/posts/papers/2020-12-10-artful/</guid>
       <description>ART is an space efficient Radix tree for efficient indexing in main memory.</description>
     </item>
     
     <item>
       <title>Paper review: HOT Radix Tree</title>
-      <link>https://0x7b1.github.io/posts/papers/2020-11-21-hot/</link>
+      <link>https://carlosr.me/posts/papers/2020-11-21-hot/</link>
       <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://0x7b1.github.io/posts/papers/2020-11-21-hot/</guid>
+      <guid>https://carlosr.me/posts/papers/2020-11-21-hot/</guid>
       <description>HOT is a efficient radix tree that uses a general purpose index structure for main-memory database systems or string intensive applications.</description>
     </item>
     

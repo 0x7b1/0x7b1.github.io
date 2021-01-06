@@ -27,7 +27,7 @@ These are the highlights and memorable experiences and discoveries made in 2020.
 ## Films/Shows
 
 {{< gallery match="images/movies/*" lastRow="left" showExif="true" rowHeight="120" >}}
-## Videogames
 
+## Videogames
 
 {{< gallery match="images/videogames/*" lastRow="left" showExif="true" rowHeight="120" >}}
